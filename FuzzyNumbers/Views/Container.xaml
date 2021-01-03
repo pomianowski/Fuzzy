@@ -34,9 +34,31 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <controls:WindowNavigation Grid.Row="0" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <controls:WindowNavigation Grid.Row="0" Grid.ColumnSpan="2" />
+        <StackPanel
+            Grid.Row="0"
+            Margin="8"
+            Orientation="Horizontal">
+            <Image
+                Height="15"
+                VerticalAlignment="Center"
+                RenderOptions.BitmapScalingMode="HighQuality"
+                Source="pack://application:,,,/fuzzynumbers-v2.ico" />
+            <TextBlock
+                Margin="4,-1,0,0"
+                VerticalAlignment="Center"
+                FontSize="13"
+                Foreground="{StaticResource ThemeDarkForeground}"
+                Text="Fuzzy" />
+        </StackPanel>
         <Frame
             x:Name="rootFrame"
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
             Navigating="FrameOnNavigating"
             NavigationUIVisibility="Hidden" />
     </Grid>

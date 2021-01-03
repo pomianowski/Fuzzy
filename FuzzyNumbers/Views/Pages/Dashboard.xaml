@@ -10,18 +10,70 @@
     d:DesignWidth="800"
     Foreground="{StaticResource ThemeForeground}"
     mc:Ignorable="d">
-
     <Grid Margin="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <ScrollViewer
+            Grid.Row="0"
+            HorizontalScrollBarVisibility="Hidden"
+            Style="{StaticResource MaterialScroll}"
+            VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" MinWidth="200" />
+                    <ColumnDefinition Width="Auto" MinWidth="200" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <Label
+                        Padding="0"
+                        Content="Ordered fuzzy number #1"
+                        Foreground="{StaticResource ThemeDarkForeground}" />
+                    <TextBox
+                        Margin="0,8,0,0"
+                        Tag="Parameter 1 - L"
+                        Template="{StaticResource MaterialTextBoxPlaceholder}" />
+                    <TextBox
+                        Margin="0,8,0,0"
+                        Tag="Parameter 2 - 1-"
+                        Template="{StaticResource MaterialTextBoxPlaceholder}" />
+                    <TextBox
+                        Margin="0,8,0,0"
+                        Tag="Parameter 3 - 1+"
+                        Template="{StaticResource MaterialTextBoxPlaceholder}" />
+                    <TextBox
+                        Margin="0,8,0,0"
+                        Tag="Parameter 4 - P"
+                        Template="{StaticResource MaterialTextBoxPlaceholder}" />
 
-            <TextBlock Text="Lorem ipsum dolor sit amet" />
-        </Grid>
+                    <Label
+                        Margin="0,24,0,0"
+                        Padding="0"
+                        Content="Ordered fuzzy number #2"
+                        Foreground="{StaticResource ThemeDarkForeground}" />
+                    <TextBox
+                        Margin="0,8,0,0"
+                        Tag="Parameter 1 - L"
+                        Template="{StaticResource MaterialTextBoxPlaceholder}" />
+                    <TextBox
+                        Margin="0,8,0,0"
+                        Tag="Parameter 2 - 1-"
+                        Template="{StaticResource MaterialTextBoxPlaceholder}" />
+                    <TextBox
+                        Margin="0,8,0,0"
+                        Tag="Parameter 3 - 1+"
+                        Template="{StaticResource MaterialTextBoxPlaceholder}" />
+                    <TextBox
+                        Margin="0,8,0,0"
+                        Tag="Parameter 4 - P"
+                        Template="{StaticResource MaterialTextBoxPlaceholder}" />
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
         <StackPanel
             Grid.Row="1"
+            Margin="0,8,0,0"
             HorizontalAlignment="Right"
             Orientation="Horizontal">
             <Button

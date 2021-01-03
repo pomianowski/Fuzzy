@@ -7,13 +7,13 @@ using System.Windows;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("FuzzyNumbers")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Fuzzy Numbers")]
+[assembly: AssemblyDescription("Operations on fuzzy sets (program implemented as part of programming engineering studies)")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("FuzzyNumbers")]
-[assembly: AssemblyCopyright("Copyright ©  2021")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("Leszek Pomianowski & Filip Pokorzyński")]
+[assembly: AssemblyProduct("Fuzzy Numbers")]
+[assembly: AssemblyCopyright("Copyright © Leszek Pomianowski & Filip Pokorzyński 2021")]
+[assembly: AssemblyTrademark("Leszek Pomianowski & Filip Pokorzyński")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible

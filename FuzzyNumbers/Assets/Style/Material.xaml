@@ -21,4 +21,67 @@
     <!--  http://xtoolkit.github.io/Micon/icons/  -->
     <FontFamily x:Key="Micon">pack://application:,,,/Assets/Fonts/#micon_nb</FontFamily>
 
+    <!--  Window Navigation  -->
+    <Style x:Key="CaptionButton" TargetType="{x:Type Button}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid
+                        x:Name="LayoutRoot"
+                        Width="44"
+                        Height="30"
+                        Background="{StaticResource ThemeColor}">
+                        <TextBlock
+                            x:Name="txt"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontFamily="{StaticResource Micon}"
+                            FontSize="{TemplateBinding FontSize}"
+                            Foreground="#999999"
+                            RenderOptions.ClearTypeHint="Auto"
+                            Text="{TemplateBinding Content}"
+                            TextOptions.TextFormattingMode="Display"
+                            TextOptions.TextRenderingMode="Aliased" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="LayoutRoot" Property="Background" Value="{StaticResource ThemeElementHover}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style
+        x:Key="MinimizeButton"
+        BasedOn="{StaticResource CaptionButton}"
+        TargetType="{x:Type Button}">
+        <Setter Property="Content" Value="&#xEDBE;" />
+        <Setter Property="FontSize" Value="10" />
+    </Style>
+
+    <Style
+        x:Key="MaximizeButton"
+        BasedOn="{StaticResource CaptionButton}"
+        TargetType="{x:Type Button}">
+        <Setter Property="Content" Value="&#xEADE;" />
+        <Setter Property="FontSize" Value="10" />
+    </Style>
+
+    <Style
+        x:Key="RestoreButton"
+        BasedOn="{StaticResource CaptionButton}"
+        TargetType="{x:Type Button}">
+        <Setter Property="Content" Value="&#xEAE2;" />
+        <Setter Property="FontSize" Value="10" />
+    </Style>
+
+    <Style
+        x:Key="CloseButton"
+        BasedOn="{StaticResource CaptionButton}"
+        TargetType="{x:Type Button}">
+        <Setter Property="Content" Value="&#xEADA;" />
+        <Setter Property="FontSize" Value="10" />
+    </Style>
+
 </ResourceDictionary>

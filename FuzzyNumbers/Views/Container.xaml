@@ -19,8 +19,6 @@
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
-    <!--
-    -->
     <WindowChrome.WindowChrome>
         <WindowChrome
             CaptionHeight="0"
@@ -41,7 +39,7 @@
         <controls:WindowNavigation Grid.Row="0" Grid.ColumnSpan="2" />
         <StackPanel
             Grid.Row="0"
-            Margin="8"
+            Margin="8,4,0,0"
             Orientation="Horizontal">
             <Image
                 Height="15"

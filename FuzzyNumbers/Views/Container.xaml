@@ -10,11 +10,13 @@
     Height="612"
     MinWidth="900"
     MinHeight="450"
-    MaxWidth="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}"
-    MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}"
     Background="{StaticResource ThemeColor}"
     Foreground="{StaticResource ThemeForeground}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
+    <!--
+        MaxWidth="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Width}"
+        MaxHeight="{Binding Source={x:Static SystemParameters.WorkArea}, Path=Height}"
+    -->
     <Grid />
 </Window>

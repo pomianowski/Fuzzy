@@ -51,7 +51,7 @@
                 VerticalAlignment="Center"
                 FontSize="13"
                 Foreground="{StaticResource ThemeDarkForeground}"
-                Text="Fuzzy" />
+                Text="Fuzzy Numbers" />
         </StackPanel>
         <Frame
             x:Name="rootFrame"

@@ -52,18 +52,22 @@
                         Foreground="{StaticResource ThemeDarkForeground}" />
                     <TextBox
                         Margin="0,8,0,0"
+                        KeyUp="TextBoxInputFuzzy_KeyUp"
                         Tag="Parameter 1 - L"
                         Template="{StaticResource MaterialTextBoxPlaceholder}" />
                     <TextBox
                         Margin="0,8,0,0"
+                        KeyUp="TextBoxInputFuzzy_KeyUp"
                         Tag="Parameter 2 - 1-"
                         Template="{StaticResource MaterialTextBoxPlaceholder}" />
                     <TextBox
                         Margin="0,8,0,0"
+                        KeyUp="TextBoxInputFuzzy_KeyUp"
                         Tag="Parameter 3 - 1+"
                         Template="{StaticResource MaterialTextBoxPlaceholder}" />
                     <TextBox
                         Margin="0,8,0,0"
+                        KeyUp="TextBoxInputFuzzy_KeyUp"
                         Tag="Parameter 4 - P"
                         Template="{StaticResource MaterialTextBoxPlaceholder}" />
 
@@ -71,21 +75,26 @@
                         Margin="0,24,0,0"
                         Padding="0"
                         Content="Ordered fuzzy number #2"
-                        Foreground="{StaticResource ThemeDarkForeground}" />
+                        Foreground="{StaticResource ThemeDarkForeground}"
+                        KeyUp="TextBoxInputFuzzy_KeyUp" />
                     <TextBox
                         Margin="0,8,0,0"
+                        KeyUp="TextBoxInputFuzzy_KeyUp"
                         Tag="Parameter 1 - L"
                         Template="{StaticResource MaterialTextBoxPlaceholder}" />
                     <TextBox
                         Margin="0,8,0,0"
+                        KeyUp="TextBoxInputFuzzy_KeyUp"
                         Tag="Parameter 2 - 1-"
                         Template="{StaticResource MaterialTextBoxPlaceholder}" />
                     <TextBox
                         Margin="0,8,0,0"
+                        KeyUp="TextBoxInputFuzzy_KeyUp"
                         Tag="Parameter 3 - 1+"
                         Template="{StaticResource MaterialTextBoxPlaceholder}" />
                     <TextBox
                         Margin="0,8,0,0"
+                        KeyUp="TextBoxInputFuzzy_KeyUp"
                         Tag="Parameter 4 - P"
                         Template="{StaticResource MaterialTextBoxPlaceholder}" />
                 </StackPanel>

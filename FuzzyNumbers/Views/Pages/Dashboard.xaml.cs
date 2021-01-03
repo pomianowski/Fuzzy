@@ -24,5 +24,16 @@ namespace FuzzyNumbers.Views.Pages
         {
             InitializeComponent();
         }
+
+        private void Button_Calc(object sender, RoutedEventArgs e)
+        {
+            string tag = (sender as Button).Tag.ToString().ToLower().Trim();
+
+            switch (tag)
+            {
+                default:
+                    break;
+            }
+        }
     }
 }

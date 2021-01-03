@@ -21,6 +21,45 @@
     <!--  http://xtoolkit.github.io/Micon/icons/  -->
     <FontFamily x:Key="Micon">pack://application:,,,/Assets/Fonts/#micon_nb</FontFamily>
 
+    <Style x:Key="MaterialButton" TargetType="{x:Type Button}">
+        <Setter Property="Padding" Value="16,8" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Foreground" Value="{StaticResource ThemeForeground}" />
+        <Setter Property="Background" Value="{StaticResource ThemeElement}" />
+        <Setter Property="BorderBrush" Value="#303030" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border
+                        Padding="{TemplateBinding Padding}"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="1">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#202020" />
+                <Setter Property="BorderBrush" Value="#515151" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{StaticResource ThemeDarkForeground}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MaterialIcon" TargetType="{x:Type TextBlock}">
+        <Setter Property="Margin" Value="0,0,5,0" />
+        <Setter Property="FontFamily" Value="{StaticResource Micon}" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+    </Style>
+
     <!--  Window Navigation  -->
     <Style x:Key="CaptionButton" TargetType="{x:Type Button}">
         <Setter Property="Template">

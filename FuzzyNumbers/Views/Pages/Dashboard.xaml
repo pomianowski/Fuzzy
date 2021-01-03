@@ -12,6 +12,61 @@
     mc:Ignorable="d">
 
     <Grid Margin="8">
-        <TextBlock Text="Lorem ipsum dolor sit amet" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+
+            <TextBlock Text="Lorem ipsum dolor sit amet" />
+        </Grid>
+        <StackPanel
+            Grid.Row="1"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Button
+                MinWidth="20"
+                Click="Button_Calc"
+                Style="{StaticResource MaterialButton}"
+                Tag="add">
+                <TextBlock
+                    Margin="0"
+                    Style="{StaticResource MaterialIcon}"
+                    Text="&#xEA0C;" />
+            </Button>
+            <Button
+                MinWidth="20"
+                Margin="4,0,0,0"
+                Click="Button_Calc"
+                Style="{StaticResource MaterialButton}"
+                Tag="subtract">
+                <TextBlock
+                    Margin="0"
+                    Style="{StaticResource MaterialIcon}"
+                    Text="&#xEA94;" />
+            </Button>
+            <Button
+                MinWidth="20"
+                Margin="4,0,0,0"
+                Click="Button_Calc"
+                Style="{StaticResource MaterialButton}"
+                Tag="multiply">
+                <TextBlock
+                    Margin="0"
+                    Style="{StaticResource MaterialIcon}"
+                    Text="&#xEA90;" />
+            </Button>
+            <Button
+                MinWidth="20"
+                Margin="4,0,0,0"
+                Click="Button_Calc"
+                Style="{StaticResource MaterialButton}"
+                Tag="divide">
+                <TextBlock
+                    Margin="0"
+                    Style="{StaticResource MaterialIcon}"
+                    Text="&#xEA8E;" />
+            </Button>
+        </StackPanel>
     </Grid>
 </Page>

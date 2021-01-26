@@ -123,20 +123,6 @@
                             Background="Transparent"
                             Click="Button_Calc"
                             Style="{StaticResource MaterialButton}"
-                            Tag="sum">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock
-                                    Margin="0"
-                                    Style="{StaticResource MaterialIcon}"
-                                    Text="&#xEA8F;" />
-                                <TextBlock Margin="8,0,0,0" Text="Summary of all sets" />
-                            </StackPanel>
-                        </Button>
-                        <Button
-                            Margin="0,4,0,0"
-                            Background="Transparent"
-                            Click="Button_Calc"
-                            Style="{StaticResource MaterialButton}"
                             Tag="complement">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock
@@ -144,6 +130,20 @@
                                     Style="{StaticResource MaterialIcon}"
                                     Text="&#xEDBD;" />
                                 <TextBlock Margin="8,0,0,0" Text="Complement of all sets" />
+                            </StackPanel>
+                        </Button>
+                        <Button
+                            Margin="0,4,0,0"
+                            Background="Transparent"
+                            Click="Button_Calc"
+                            Style="{StaticResource MaterialButton}"
+                            Tag="sum">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="0"
+                                    Style="{StaticResource MaterialIcon}"
+                                    Text="&#xEA8F;" />
+                                <TextBlock Margin="8,0,0,0" Text="Summary of all sets" />
                             </StackPanel>
                         </Button>
                     </StackPanel>

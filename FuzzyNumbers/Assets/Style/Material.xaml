@@ -186,6 +186,190 @@
         </Style.Resources>
     </Style>
 
+    <Style x:Key="MaterialExpander" TargetType="{x:Type Expander}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeForeground}" />
+    </Style>
+
+    <Style x:Key="MaterialComboBox" TargetType="{x:Type ComboBox}">
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="MinHeight" Value="25" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FlowDirection" Value="LeftToRight" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0,0,0,0" />
+        <Setter Property="Padding" Value="0,0,0,0" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBox}">
+                    <ControlTemplate.Resources>
+                        <Style BasedOn="{x:Null}" TargetType="{x:Type TextBox}">
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="Background" Value="{StaticResource ThemeColor}" />
+                            <Setter Property="Focusable" Value="True" />
+                            <Setter Property="Foreground" Value="Green" />
+                            <Setter Property="Visibility" Value="Hidden" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type TextBox}">
+                                        <Border
+                                            x:Name="PART_ContentHost"
+                                            HorizontalAlignment="Stretch"
+                                            Background="{TemplateBinding Background}"
+                                            Focusable="False" />
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style TargetType="{x:Type ComboBoxItem}">
+                            <Setter Property="MinHeight" Value="25" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Foreground" Value="{StaticResource ThemeForeground}" />
+                            <Setter Property="SnapsToDevicePixels" Value="true" />
+                            <Setter Property="OverridesDefaultStyle" Value="true" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                                        <Border
+                                            Name="Border"
+                                            Padding="8"
+                                            VerticalAlignment="Stretch"
+                                            SnapsToDevicePixels="true">
+                                            <ContentPresenter VerticalAlignment="Center" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsHighlighted" Value="true">
+                                                <Setter TargetName="Border" Property="Background" Value="{StaticResource ThemeElementHover}" />
+                                            </Trigger>
+                                            <Trigger Property="IsEnabled" Value="false">
+                                                <Setter Property="Foreground" Value="{StaticResource ThemeDarkForeground}" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style TargetType="{x:Type ToggleButton}">
+                            <Setter Property="OverridesDefaultStyle" Value="True" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="20" />
+                                            </Grid.ColumnDefinitions>
+                                            <Border
+                                                x:Name="Border"
+                                                Grid.ColumnSpan="2"
+                                                Background="{StaticResource ThemeColor}"
+                                                BorderBrush="{StaticResource ThemeBorder}"
+                                                BorderThickness="1"
+                                                CornerRadius="0" />
+                                            <Border
+                                                Grid.Column="0"
+                                                Margin="0"
+                                                Background="{StaticResource ThemeColor}"
+                                                BorderBrush="{StaticResource ThemeBorder}"
+                                                BorderThickness="1,1,1,1"
+                                                CornerRadius="0" />
+                                            <Path
+                                                x:Name="Arrow"
+                                                Grid.Column="1"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"
+                                                Fill="White" />
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                                                <Setter TargetName="Border" Property="Background" Value="#202020" />
+                                            </Trigger>
+                                            <Trigger Property="ToggleButton.IsChecked" Value="true">
+                                                <Setter TargetName="Border" Property="Background" Value="#202020" />
+                                            </Trigger>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter TargetName="Border" Property="Background" Value="#202020" />
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="#303030" />
+                                                <Setter Property="Foreground" Value="{StaticResource ThemeDarkForeground}" />
+                                                <Setter TargetName="Arrow" Property="Fill" Value="{StaticResource ThemeDarkForeground}" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ControlTemplate.Resources>
+                    <Grid>
+                        <ToggleButton
+                            Name="ToggleButton"
+                            Grid.Column="2"
+                            ClickMode="Press"
+                            Focusable="false"
+                            IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" />
+                        <ContentPresenter
+                            Name="ContentSite"
+                            Margin="8"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Content="{TemplateBinding SelectionBoxItem}"
+                            ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                            ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                            IsHitTestVisible="False" />
+                        <TextBox
+                            x:Name="PART_EditableTextBox"
+                            Margin="8"
+                            IsReadOnly="{TemplateBinding IsReadOnly}" />
+                        <Popup
+                            Name="Popup"
+                            AllowsTransparency="True"
+                            Focusable="False"
+                            IsOpen="{TemplateBinding IsDropDownOpen}"
+                            Placement="Bottom"
+                            PopupAnimation="Slide">
+                            <Grid
+                                Name="DropDown"
+                                MinWidth="{TemplateBinding ActualWidth}"
+                                MaxHeight="{TemplateBinding MaxDropDownHeight}"
+                                SnapsToDevicePixels="True">
+                                <Border
+                                    x:Name="DropDownBorder"
+                                    Background="{StaticResource ThemeColor}"
+                                    BorderBrush="{StaticResource ThemeBorder}"
+                                    BorderThickness="1" />
+                                <ScrollViewer Margin="1,3,-16,1" SnapsToDevicePixels="True">
+                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                </ScrollViewer>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasItems" Value="false">
+                            <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{StaticResource ThemeDarkForeground}" />
+                        </Trigger>
+                        <Trigger Property="IsGrouping" Value="true">
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false" />
+                        </Trigger>
+                        <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="true">
+                            <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="0" />
+                            <Setter TargetName="DropDownBorder" Property="Margin" Value="0,2,0,0" />
+                        </Trigger>
+                        <Trigger Property="IsEditable" Value="true">
+                            <Setter Property="IsTabStop" Value="false" />
+                            <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!--  Window Navigation  -->
     <Style x:Key="CaptionButton" TargetType="{x:Type Button}">
         <Setter Property="Template">

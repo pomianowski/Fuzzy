@@ -209,6 +209,7 @@
     <Compile Include="Assets\Controls\WindowNavigation.xaml.cs">
       <DependentUpon>WindowNavigation.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FuzzySet.cs" />
     <Compile Include="Views\Container.xaml.cs">
       <DependentUpon>Container.xaml</DependentUpon>
     </Compile>

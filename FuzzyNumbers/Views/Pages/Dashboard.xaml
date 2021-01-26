@@ -45,123 +45,141 @@
                     <ColumnDefinition Width="Auto" MinWidth="200" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0">
-                    <Label
-                        Padding="0"
-                        Content="Ordered fuzzy number #1"
-                        Foreground="{StaticResource ThemeDarkForeground}" />
-                    <TextBox
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0">
+                        <Label
+                            Padding="0"
+                            Content="Function class"
+                            Foreground="{StaticResource ThemeDarkForeground}" />
+                        <ComboBox
+                            x:Name="comboClass"
+                            Margin="0,2,0,0"
+                            SelectionChanged="ComboClass_SelectionChanged"
+                            Style="{StaticResource MaterialComboBox}">
+                            <ComboBoxItem Content="Class Singleton" IsSelected="True" />
+                            <ComboBoxItem Content="Class Gamma" />
+                            <ComboBoxItem Content="Class 'L'" />
+                            <ComboBoxItem Content="Class 't'" />
+                        </ComboBox>
+                        <TextBox
+                            x:Name="textInputOne"
+                            Margin="0,8,0,0"
+                            KeyUp="TextBoxInputFuzzy_KeyUp"
+                            Tag="(x, a)"
+                            Template="{StaticResource MaterialTextBoxPlaceholder}" />
+                        <TextBox
+                            x:Name="textInputTwo"
+                            Margin="0,8,0,0"
+                            IsEnabled="False"
+                            KeyUp="TextBoxInputFuzzy_KeyUp"
+                            Tag="(x, b)"
+                            Template="{StaticResource MaterialTextBoxPlaceholder}" />
+                        <TextBox
+                            x:Name="textInputThree"
+                            Margin="0,8,0,0"
+                            IsEnabled="False"
+                            KeyUp="TextBoxInputFuzzy_KeyUp"
+                            Tag="(x, c)"
+                            Template="{StaticResource MaterialTextBoxPlaceholder}" />
+                        <Button
+                            Margin="0,8,0,0"
+                            Background="Transparent"
+                            Click="Button_AddNew"
+                            Style="{StaticResource MaterialButton}"
+                            Tag="add">
+                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="0"
+                                    Style="{StaticResource MaterialIcon}"
+                                    Text="&#xEA0C;" />
+                                <TextBlock Margin="6,0,0,0" Text="Add fuzzy set to axis" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Row="1"
                         Margin="0,8,0,0"
-                        KeyUp="TextBoxInputFuzzy_KeyUp"
-                        Tag="Parameter 1 - L"
-                        Template="{StaticResource MaterialTextBoxPlaceholder}" />
-                    <TextBox
-                        Margin="0,8,0,0"
-                        KeyUp="TextBoxInputFuzzy_KeyUp"
-                        Tag="Parameter 2 - 1-"
-                        Template="{StaticResource MaterialTextBoxPlaceholder}" />
-                    <TextBox
-                        Margin="0,8,0,0"
-                        KeyUp="TextBoxInputFuzzy_KeyUp"
-                        Tag="Parameter 3 - 1+"
-                        Template="{StaticResource MaterialTextBoxPlaceholder}" />
-                    <TextBox
-                        Margin="0,8,0,0"
-                        KeyUp="TextBoxInputFuzzy_KeyUp"
-                        Tag="Parameter 4 - P"
-                        Template="{StaticResource MaterialTextBoxPlaceholder}" />
-
-                    <Label
-                        Margin="0,24,0,0"
-                        Padding="0"
-                        Content="Ordered fuzzy number #2"
-                        Foreground="{StaticResource ThemeDarkForeground}"
-                        KeyUp="TextBoxInputFuzzy_KeyUp" />
-                    <TextBox
-                        Margin="0,8,0,0"
-                        KeyUp="TextBoxInputFuzzy_KeyUp"
-                        Tag="Parameter 1 - L"
-                        Template="{StaticResource MaterialTextBoxPlaceholder}" />
-                    <TextBox
-                        Margin="0,8,0,0"
-                        KeyUp="TextBoxInputFuzzy_KeyUp"
-                        Tag="Parameter 2 - 1-"
-                        Template="{StaticResource MaterialTextBoxPlaceholder}" />
-                    <TextBox
-                        Margin="0,8,0,0"
-                        KeyUp="TextBoxInputFuzzy_KeyUp"
-                        Tag="Parameter 3 - 1+"
-                        Template="{StaticResource MaterialTextBoxPlaceholder}" />
-                    <TextBox
-                        Margin="0,8,0,0"
-                        KeyUp="TextBoxInputFuzzy_KeyUp"
-                        Tag="Parameter 4 - P"
-                        Template="{StaticResource MaterialTextBoxPlaceholder}" />
-                </StackPanel>
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                        <Button
+                            MinWidth="20"
+                            Background="Transparent"
+                            Click="Button_Calc"
+                            Style="{StaticResource MaterialButton}"
+                            Tag="add">
+                            <TextBlock
+                                Margin="0"
+                                Style="{StaticResource MaterialIcon}"
+                                Text="&#xEA0C;" />
+                        </Button>
+                        <Button
+                            MinWidth="20"
+                            Margin="4,0,0,0"
+                            Background="Transparent"
+                            Click="Button_Calc"
+                            Style="{StaticResource MaterialButton}"
+                            Tag="subtract">
+                            <TextBlock
+                                Margin="0"
+                                Style="{StaticResource MaterialIcon}"
+                                Text="&#xEA94;" />
+                        </Button>
+                        <Button
+                            MinWidth="20"
+                            Margin="4,0,0,0"
+                            Background="Transparent"
+                            Click="Button_Calc"
+                            Style="{StaticResource MaterialButton}"
+                            Tag="multiply">
+                            <TextBlock
+                                Margin="0"
+                                Style="{StaticResource MaterialIcon}"
+                                Text="&#xEA90;" />
+                        </Button>
+                        <Button
+                            MinWidth="20"
+                            Margin="4,0,0,0"
+                            Background="Transparent"
+                            Click="Button_Calc"
+                            Style="{StaticResource MaterialButton}"
+                            Tag="divide">
+                            <TextBlock
+                                Margin="0"
+                                Style="{StaticResource MaterialIcon}"
+                                Text="&#xEA8E;" />
+                        </Button>
+                    </StackPanel>
+                </Grid>
                 <Grid Grid.Column="1">
-                    <lvc:CartesianChart LegendLocation="None" Series="{Binding SeriesCollection}">
+                    <lvc:CartesianChart
+                        x:Name="cartesianChart"
+                        DataTooltip="{x:Null}"
+                        LegendLocation="Bottom"
+                        Series="{Binding SeriesCollection}">
                         <lvc:CartesianChart.AxisY>
-                            <lvc:Axis Title="Y-axis" />
+                            <lvc:Axis
+                                Title="Y-axis"
+                                MaxValue="2"
+                                MinValue="0">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator Step="1" />
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
                         </lvc:CartesianChart.AxisY>
                         <lvc:CartesianChart.AxisX>
-                            <lvc:Axis Title="X-axis" />
+                            <lvc:Axis Title="X-axis">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator Step="1" />
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
                         </lvc:CartesianChart.AxisX>
                     </lvc:CartesianChart>
                 </Grid>
             </Grid>
         </ScrollViewer>
-        <StackPanel
-            Grid.Row="1"
-            Margin="0,8,0,0"
-            HorizontalAlignment="Right"
-            Orientation="Horizontal">
-            <Button
-                MinWidth="20"
-                Background="Transparent"
-                Click="Button_Calc"
-                Style="{StaticResource MaterialButton}"
-                Tag="add">
-                <TextBlock
-                    Margin="0"
-                    Style="{StaticResource MaterialIcon}"
-                    Text="&#xEA0C;" />
-            </Button>
-            <Button
-                MinWidth="20"
-                Margin="4,0,0,0"
-                Background="Transparent"
-                Click="Button_Calc"
-                Style="{StaticResource MaterialButton}"
-                Tag="subtract">
-                <TextBlock
-                    Margin="0"
-                    Style="{StaticResource MaterialIcon}"
-                    Text="&#xEA94;" />
-            </Button>
-            <Button
-                MinWidth="20"
-                Margin="4,0,0,0"
-                Background="Transparent"
-                Click="Button_Calc"
-                Style="{StaticResource MaterialButton}"
-                Tag="multiply">
-                <TextBlock
-                    Margin="0"
-                    Style="{StaticResource MaterialIcon}"
-                    Text="&#xEA90;" />
-            </Button>
-            <Button
-                MinWidth="20"
-                Margin="4,0,0,0"
-                Background="Transparent"
-                Click="Button_Calc"
-                Style="{StaticResource MaterialButton}"
-                Tag="divide">
-                <TextBlock
-                    Margin="0"
-                    Style="{StaticResource MaterialIcon}"
-                    Text="&#xEA8E;" />
-            </Button>
-        </StackPanel>
     </Grid>
 </Page>

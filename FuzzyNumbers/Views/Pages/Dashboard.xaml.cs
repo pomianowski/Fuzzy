@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using LiveCharts;
+using LiveCharts.Defaults;
 using LiveCharts.Helpers;
 using LiveCharts.Wpf;
 
@@ -48,6 +50,36 @@ namespace FuzzyNumbers.Views.Pages
                 },
                 new LineSeries
                 {
+                    Title = "Fuzzy number test",
+                    StrokeThickness = 1,
+                    LineSmoothness = 0,
+                    Fill = System.Windows.Media.Brushes.Transparent,
+                    PointGeometry = null,
+                    DataLabels = false,
+                    Values = new ChartValues<ObservablePoint>
+                    {
+                        new ObservablePoint(-2, 0),
+                        new ObservablePoint(-1, 1),
+                        new ObservablePoint(12, 1),
+                        new ObservablePoint(13, 0),
+                    }
+                },
+                new LineSeries
+                {
+                    Title = "Singleton",
+                    StrokeThickness = 1,
+                    LineSmoothness = 0,
+                    Fill = System.Windows.Media.Brushes.Transparent,
+                    PointGeometry = null,
+                    DataLabels = false,
+                    Values = new ChartValues<ObservablePoint>
+                    {
+                        new ObservablePoint(1, 0),
+                        new ObservablePoint(1, 1)
+                    }
+                },
+                new LineSeries
+                {
                     Title = "Fuzzy number #3",
                     StrokeThickness = 1,
                     LineSmoothness = 0,
@@ -81,27 +113,83 @@ namespace FuzzyNumbers.Views.Pages
             DataContext = this;
         }
 
+        private FuzzyValue ParseFuzzyValue(string text)
+        {
+            text = text.Trim();
+
+            if(string.IsNullOrEmpty(text))
+                return new FuzzyValue { value = null, x = null };
+
+            text = Regex.Replace(text, "[^0-9,.-]", "");
+            string[] points = text.Split(',');
+
+            double point_x = 0;
+            double point_value = 0;
+
+            if (points.Length > 2 || points.Length < 1 || !double.TryParse(points[0], out point_x) || !double.TryParse(points[1], out point_value))
+                return new FuzzyValue { value = null, x = null };
+
+
+            return new FuzzyValue { x = point_x, value = point_value };
+        }
+
         private void ParseCurrentSet()
         {
-            string value_a = textInputOne.Text;
-            string value_b = textInputTwo.Text;
-            string value_c = textInputThree.Text;
+            int index = _fuzzySets.Count;
+            string title = "Unknown";
 
-            _fuzzySets.Add(new FuzzySet {
-                Type = CalcType.Singleton
+            CalcType selectedType = CalcType.Unknown;
+
+            switch (comboClass.SelectedIndex)
+            {
+                case 0:
+                    selectedType = CalcType.Singleton;
+                    title = "Singleton";
+                    break;
+                case 1:
+                    selectedType = CalcType.Gamma;
+                    title = "Gamma";
+                    break;
+                case 2:
+                    selectedType = CalcType.L;
+                    title = "L";
+                    break;
+                case 3:
+                    selectedType = CalcType.T;
+                    title = "T";
+                    break;
+            }
+
+            FuzzyValue value_a = ParseFuzzyValue(textInputOne.Text);
+            FuzzyValue value_b = ParseFuzzyValue(textInputTwo.Text);
+            FuzzyValue value_c = ParseFuzzyValue(textInputThree.Text);
+
+            this._fuzzySets.Add(new FuzzySet {
+                Type = selectedType,
+                a = value_a,
+                b = value_b,
+                c = value_c
             });
 
-            this.SeriesCollection.Add(new LineSeries
-                {
-                    Title = "Fuzzy number #" + (_fuzzySets.Count + 1),
-                    StrokeThickness = 1,
-                    LineSmoothness = 0,
-                    Fill = System.Windows.Media.Brushes.Transparent,
-                    PointGeometry = null,
-                    DataLabels = false,
-                    Values = new ChartValues<double> { double.NaN, 1, 0, 0, 1, double.NaN, double.NaN, double.NaN, double.NaN, double.NaN, double.NaN, double.NaN },
-                }
-            );
+            this.SeriesCollection.Add(new LineSeries {
+                Title = "Fuzzy " + title + " #" + _fuzzySets.Count,
+                StrokeThickness = 1,
+                LineSmoothness = 0,
+                Fill = System.Windows.Media.Brushes.Transparent,
+                PointGeometry = null,
+                DataLabels = false,
+                Values = this._fuzzySets[this._fuzzySets.Count - 1].GetPlot()
+            });
+
+#if DEBUG
+            System.Diagnostics.Debug.WriteLine("FuzzySet #" + index + ", type is = " + this._fuzzySets[index].Type.ToString());
+            System.Diagnostics.Debug.WriteLine("FuzzySet #" + index + " value a is x = " + this._fuzzySets[index].a.x.ToString());
+            System.Diagnostics.Debug.WriteLine("FuzzySet #" + index + " value a is value = " + this._fuzzySets[index].a.value.ToString());
+            System.Diagnostics.Debug.WriteLine("FuzzySet #" + index + " value b is x = " + this._fuzzySets[index].b.x.ToString());
+            System.Diagnostics.Debug.WriteLine("FuzzySet #" + index + " value b is value = " + this._fuzzySets[index].b.value.ToString());
+            System.Diagnostics.Debug.WriteLine("FuzzySet #" + index + " value c is x = " + this._fuzzySets[index].c.x.ToString());
+            System.Diagnostics.Debug.WriteLine("FuzzySet #" + index + " value c is value = " + this._fuzzySets[index].c.value.ToString());
+#endif
         }
 
         private void TextBoxInputFuzzy_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LiveCharts;
+using LiveCharts.Defaults;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,9 +38,34 @@ namespace FuzzyNumbers
     {
         public CalcType Type = CalcType.Unknown;
 
+
         public FuzzyValue a = new FuzzyValue { value = null, x = null };
         public FuzzyValue b = new FuzzyValue { value = null, x = null };
         public FuzzyValue c = new FuzzyValue { value = null, x = null };
+
+        public ChartValues<ObservablePoint> GetPlot()
+        {
+            ChartValues<ObservablePoint> points = new ChartValues<ObservablePoint> { };
+
+            switch (this.Type)
+            {
+                case CalcType.Singleton:
+                    points.Add(new ObservablePoint((int)a.x, 0));
+                    points.Add(new ObservablePoint((int)a.x, 1));
+                    break;
+                case CalcType.Gamma:
+                    break;
+                case CalcType.L:
+                    break;
+                case CalcType.T:
+                    break;
+                default:
+                    break;
+            }
+            //
+
+            return points;
+        }
 
         public FuzzySet Product(FuzzySet set)
         {

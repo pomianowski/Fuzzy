@@ -77,7 +77,7 @@ namespace FuzzyNumbers
             return set;
         }
 
-        public FuzzySet Adjunct(FuzzySet set)
+        public FuzzySet Complement(FuzzySet set)
         {
             return set;
         }

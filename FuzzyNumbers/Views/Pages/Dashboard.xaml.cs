@@ -171,7 +171,7 @@ namespace FuzzyNumbers.Views.Pages
             });
 
             this.SeriesCollection.Add(new LineSeries {
-                Title = "Fuzzy " + title + " #" + _fuzzySets.Count,
+                Title = title + " #" + _fuzzySets.Count,
                 StrokeThickness = 1,
                 LineSmoothness = 0,
                 Fill = System.Windows.Media.Brushes.Transparent,
@@ -179,6 +179,7 @@ namespace FuzzyNumbers.Views.Pages
                 DataLabels = false,
                 Values = this._fuzzySets[this._fuzzySets.Count - 1].GetPlot()
             });
+            textInputOne.Text = textInputTwo.Text = textInputThree.Text = string.Empty;
 
 #if DEBUG
             System.Diagnostics.Debug.WriteLine("FuzzySet #" + index + ", type is = " + this._fuzzySets[index].Type.ToString());

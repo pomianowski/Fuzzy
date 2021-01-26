@@ -49,6 +49,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0">
                         <Label
@@ -103,56 +104,83 @@
                     <StackPanel
                         Grid.Row="1"
                         Margin="0,8,0,0"
-                        HorizontalAlignment="Right"
-                        Orientation="Horizontal">
+                        HorizontalAlignment="Stretch">
                         <Button
-                            MinWidth="20"
                             Background="Transparent"
                             Click="Button_Calc"
                             Style="{StaticResource MaterialButton}"
-                            Tag="add">
-                            <TextBlock
-                                Margin="0"
-                                Style="{StaticResource MaterialIcon}"
-                                Text="&#xEA0C;" />
+                            Tag="product">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="0"
+                                    Style="{StaticResource MaterialIcon}"
+                                    Text="&#xEA90;" />
+                                <TextBlock Margin="8,0,0,0" Text="Product of all sets" />
+                            </StackPanel>
                         </Button>
                         <Button
-                            MinWidth="20"
-                            Margin="4,0,0,0"
+                            Margin="0,4,0,0"
                             Background="Transparent"
                             Click="Button_Calc"
                             Style="{StaticResource MaterialButton}"
-                            Tag="subtract">
-                            <TextBlock
-                                Margin="0"
-                                Style="{StaticResource MaterialIcon}"
-                                Text="&#xEA94;" />
+                            Tag="sum">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="0"
+                                    Style="{StaticResource MaterialIcon}"
+                                    Text="&#xEA8F;" />
+                                <TextBlock Margin="8,0,0,0" Text="Summary of all sets" />
+                            </StackPanel>
                         </Button>
                         <Button
-                            MinWidth="20"
-                            Margin="4,0,0,0"
+                            Margin="0,4,0,0"
                             Background="Transparent"
                             Click="Button_Calc"
                             Style="{StaticResource MaterialButton}"
-                            Tag="multiply">
-                            <TextBlock
-                                Margin="0"
-                                Style="{StaticResource MaterialIcon}"
-                                Text="&#xEA90;" />
-                        </Button>
-                        <Button
-                            MinWidth="20"
-                            Margin="4,0,0,0"
-                            Background="Transparent"
-                            Click="Button_Calc"
-                            Style="{StaticResource MaterialButton}"
-                            Tag="divide">
-                            <TextBlock
-                                Margin="0"
-                                Style="{StaticResource MaterialIcon}"
-                                Text="&#xEA8E;" />
+                            Tag="complement">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="0"
+                                    Style="{StaticResource MaterialIcon}"
+                                    Text="&#xEDBD;" />
+                                <TextBlock Margin="8,0,0,0" Text="Complement of all sets" />
+                            </StackPanel>
                         </Button>
                     </StackPanel>
+                    <Grid Grid.Row="2" Margin="0,8,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button
+                            Grid.Column="0"
+                            Margin="0,0,2,0"
+                            Background="Transparent"
+                            Style="{StaticResource MaterialButton}"
+                            Tag="complement">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="0"
+                                    Style="{StaticResource MaterialIcon}"
+                                    Text="&#xEB68;" />
+                                <TextBlock Margin="8,0,0,0" Text="Import" />
+                            </StackPanel>
+                        </Button>
+                        <Button
+                            Grid.Column="1"
+                            Margin="2,0,0,0"
+                            Background="Transparent"
+                            Style="{StaticResource MaterialButton}"
+                            Tag="complement">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="0"
+                                    Style="{StaticResource MaterialIcon}"
+                                    Text="&#xEEE9;" />
+                                <TextBlock Margin="8,0,0,0" Text="Export" />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
                 </Grid>
                 <Grid Grid.Column="1">
                     <lvc:CartesianChart

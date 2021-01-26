@@ -126,9 +126,8 @@ namespace FuzzyNumbers.Views.Pages
             double point_x = 0;
             double point_value = 0;
 
-            if (points.Length > 2 || points.Length < 1 || !double.TryParse(points[0], out point_x) || !double.TryParse(points[1], out point_value))
+            if (points.Length > 2 || !double.TryParse(points[0], out point_x))
                 return new FuzzyValue { value = null, x = null };
-
 
             return new FuzzyValue { x = point_x, value = point_value };
         }
@@ -232,21 +231,25 @@ namespace FuzzyNumbers.Views.Pages
             switch (index)
             {
                 case 0:
+                    textInputOne.Tag = "(x)";
                     textInputOne.IsEnabled = true;
                     textInputTwo.IsEnabled = textInputThree.IsEnabled = false;
-                        break;
+                    break;
 
                 case 1:
+                    textInputOne.Tag = "(x, a)";
                     textInputOne.IsEnabled = textInputTwo.IsEnabled = true;
                     textInputThree.IsEnabled = false;
                     break;
 
                 case 2:
+                    textInputOne.Tag = "(x, a)";
                     textInputOne.IsEnabled = textInputTwo.IsEnabled = true;
                     textInputThree.IsEnabled = false;
                     break;
 
                 case 3:
+                    textInputOne.Tag = "(x, a)";
                     textInputOne.IsEnabled = textInputTwo.IsEnabled = textInputThree.IsEnabled = true;
                     break;
             }

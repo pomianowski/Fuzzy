@@ -69,7 +69,7 @@
                             x:Name="textInputOne"
                             Margin="0,8,0,0"
                             KeyUp="TextBoxInputFuzzy_KeyUp"
-                            Tag="(x, a)"
+                            Tag="(x)"
                             Template="{StaticResource MaterialTextBoxPlaceholder}" />
                         <TextBox
                             x:Name="textInputTwo"

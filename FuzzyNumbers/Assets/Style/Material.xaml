@@ -80,7 +80,7 @@
     </Style>
 
     <ControlTemplate x:Key="MaterialTextBoxPlaceholder" TargetType="{x:Type TextBox}">
-        <Grid>
+        <Grid x:Name="tG">
             <TextBlock
                 x:Name="wm"
                 Margin="10,0"
@@ -106,7 +106,7 @@
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsEnabled" Value="false">
-
+                <Setter TargetName="tG" Property="Background" Value="{StaticResource ThemeBorder}" />
                 <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
             </Trigger>
         </ControlTemplate.Triggers>

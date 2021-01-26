@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 using LiveCharts;
 using LiveCharts.Helpers;
@@ -11,10 +12,13 @@ namespace FuzzyNumbers.Views.Pages
     /// </summary>
     public partial class Dashboard : Page
     {
+        public List<FuzzySet> _fuzzySets;
         public SeriesCollection SeriesCollection { get; set; }
         public Dashboard()
         {
             InitializeComponent();
+
+            this._fuzzySets = new List<FuzzySet> { };
             this.InitializeChart();
         }
 
@@ -22,7 +26,7 @@ namespace FuzzyNumbers.Views.Pages
         {
             SeriesCollection = new SeriesCollection
             {
-                new LineSeries
+                /*new LineSeries
                 {
                     Title = "Fuzzy number #1",
                     StrokeThickness = 1,
@@ -71,22 +75,33 @@ namespace FuzzyNumbers.Views.Pages
                     PointGeometry = null,
                     DataLabels = false,
                     Values = new ChartValues<double> { double.NaN, 1, 0, 0,  1, double.NaN, double.NaN, double.NaN, double.NaN, double.NaN, double.NaN, double.NaN },
-                }
+                }*/
             };
 
-            cartesianChart.AxisY.Add(new Axis
-            {
-                MinValue = 0,
-                MaxValue = 1,
-                Separator = new LiveCharts.Wpf.Separator
-                {
-                    StrokeThickness = 1,
-                    Step = 1
-                }
+            DataContext = this;
+        }
 
+        private void ParseCurrentSet()
+        {
+            string value_a = textInputOne.Text;
+            string value_b = textInputTwo.Text;
+            string value_c = textInputThree.Text;
+
+            _fuzzySets.Add(new FuzzySet {
+                Type = CalcType.Singleton
             });
 
-            DataContext = this;
+            this.SeriesCollection.Add(new LineSeries
+                {
+                    Title = "Fuzzy number #" + (_fuzzySets.Count + 1),
+                    StrokeThickness = 1,
+                    LineSmoothness = 0,
+                    Fill = System.Windows.Media.Brushes.Transparent,
+                    PointGeometry = null,
+                    DataLabels = false,
+                    Values = new ChartValues<double> { double.NaN, 1, 0, 0, 1, double.NaN, double.NaN, double.NaN, double.NaN, double.NaN, double.NaN, double.NaN },
+                }
+            );
         }
 
         private void TextBoxInputFuzzy_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
@@ -114,7 +129,7 @@ namespace FuzzyNumbers.Views.Pages
 
         private void Button_AddNew(object sender, RoutedEventArgs e)
         {
-
+            this.ParseCurrentSet();
         }
 
         private void ComboClass_SelectionChanged(object sender, SelectionChangedEventArgs e)

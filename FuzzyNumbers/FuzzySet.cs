@@ -6,28 +6,39 @@ using System.Threading.Tasks;
 
 namespace FuzzyNumbers
 {
+    /*
+     * Uszczegółowienie zadania:
+     * Zaimplementować realizację działań na zbiorach rozmytych (iloczyn, suma i dopełnienie). 
+     * Umożliwić wprowadzanie ciągów operacji. Wybieranie dyskretyzacji dziedziny funkcji. Zapisywanie, odczytywanie obiektów rozmytych. Obliczanie wartości przynależności dla podanego argumentu.
+     *
+     * Dodatkowe cechy programu:
+     * reprezentacja graficzna poszczególnych zbiorów rozmytych oraz wyników,
+     * wprowadzanie zbiorów jako krzywych,
+     * zapisywanie i wczytywanie z pliku.
+    */
 
-    enum CalcType
+    public enum CalcType
     {
-        Singleton = 0,
+        Unknown = 0,
+        Singleton,
         Gamma,
         L,
         T
     }
 
-    struct FuzzyValue
+    public struct FuzzyValue
     {
-        public double x { get; set; }
-        public double value { get; set; }
+        public double? x { get; set; }
+        public double? value { get; set; }
     }
 
-    class FuzzySet
+    public class FuzzySet
     {
-        public CalcType Type;
+        public CalcType Type = CalcType.Unknown;
 
-        public FuzzyValue a;
-        public FuzzyValue b;
-        public FuzzyValue c;
+        public FuzzyValue a = new FuzzyValue { value = null, x = null };
+        public FuzzyValue b = new FuzzyValue { value = null, x = null };
+        public FuzzyValue c = new FuzzyValue { value = null, x = null };
 
         public FuzzySet Product(FuzzySet set)
         {

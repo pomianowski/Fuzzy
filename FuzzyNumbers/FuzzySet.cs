@@ -54,6 +54,10 @@ namespace FuzzyNumbers
                     points.Add(new ObservablePoint((int)a.x, 1));
                     break;
                 case CalcType.Gamma:
+                    points.Add(new ObservablePoint((int)a.value - 4, 0));
+                    points.Add(new ObservablePoint((int)a.value, 0));
+                    points.Add(new ObservablePoint((int)b.value, 1));
+                    points.Add(new ObservablePoint((int)b.value + 4, 1));
                     break;
                 case CalcType.L:
                     break;

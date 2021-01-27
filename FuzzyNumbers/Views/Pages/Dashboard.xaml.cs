@@ -237,6 +237,16 @@ namespace FuzzyNumbers.Views.Pages
             }
         }
 
+        private void Button_Clear(object sender, RoutedEventArgs e)
+        {
+            if (this._fuzzySets.Count < 1)
+                return;
+
+            this.ShowPopup("Processing...", "All sets of fuzzy numbers are being removed...");
+            this._fuzzySets = new List<FuzzySet> { };
+            this.SeriesCollection.Clear();
+        }
+
         private void Button_AddNew(object sender, RoutedEventArgs e)
         {
             this.ParseCurrentSet();

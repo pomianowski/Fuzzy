@@ -50,27 +50,27 @@ namespace FuzzyNumbers
             switch (this.Type)
             {
                 case CalcType.Singleton:
-                    points.Add(new ObservablePoint((int)a.x, 0));
-                    points.Add(new ObservablePoint((int)a.x, 1));
+                    points.Add(new ObservablePoint((double)a.x, 0));
+                    points.Add(new ObservablePoint((double)a.x, 1));
                     break;
                 case CalcType.Gamma:
-                    points.Add(new ObservablePoint((int)a.value - 5, 0));
-                    points.Add(new ObservablePoint((int)a.value, 0));
-                    points.Add(new ObservablePoint((int)b.value, 1));
-                    points.Add(new ObservablePoint((int)b.value + 5, 1));
+                    points.Add(new ObservablePoint((double)a.value - 5, (double)a.x));
+                    points.Add(new ObservablePoint((double)a.value, (double)a.x));
+                    points.Add(new ObservablePoint((double)b.value, (double)b.x));
+                    points.Add(new ObservablePoint((double)b.value + 5, (double)b.x));
                     break;
                 case CalcType.L:
-                    points.Add(new ObservablePoint((int)a.value - 5, 1));
-                    points.Add(new ObservablePoint((int)a.value, 1));
-                    points.Add(new ObservablePoint((int)b.value, 0));
-                    points.Add(new ObservablePoint((int)b.value + 5, 0));
+                    points.Add(new ObservablePoint((double)a.value - 5, (double)a.x));
+                    points.Add(new ObservablePoint((double)a.value, (double)a.x));
+                    points.Add(new ObservablePoint((double)b.value, (double)b.x));
+                    points.Add(new ObservablePoint((double)b.value + 5, (double)b.x));
                     break;
                 case CalcType.T:
-                    points.Add(new ObservablePoint((int)a.value - 5, 0));
-                    points.Add(new ObservablePoint((int)a.value, 0));
-                    points.Add(new ObservablePoint((int)b.value, 1));
-                    points.Add(new ObservablePoint((int)c.value, 0));
-                    points.Add(new ObservablePoint((int)c.value + 5, 0));
+                    points.Add(new ObservablePoint((double)a.value - 5, (double)a.x));
+                    points.Add(new ObservablePoint((double)a.value, (double)a.x));
+                    points.Add(new ObservablePoint((double)b.value, (double)b.x));
+                    points.Add(new ObservablePoint((double)c.value, (double)c.x));
+                    points.Add(new ObservablePoint((double)c.value + 5, (double)c.x));
                     break;
                 default:
                     break;

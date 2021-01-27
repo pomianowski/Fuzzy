@@ -221,12 +221,12 @@
                         </lvc:CartesianChart.AxisX>
                     </lvc:CartesianChart>
                 </Grid>
+                <controls:Popup
+                    x:Name="popupMain"
+                    Grid.Column="1"
+                    Enabled="False"
+                    Timeout="4000" />
             </Grid>
         </ScrollViewer>
-        <controls:Popup
-            x:Name="popupMain"
-            Grid.RowSpan="2"
-            Enabled="False"
-            Timeout="4000" />
     </Grid>
 </Page>

@@ -326,6 +326,21 @@ namespace FuzzyNumbers.Views.Pages
 #endif
             switch (tag)
             {
+                case "complement":
+                    for (int i = 0; i < this._fuzzySets.Count; i++)
+                    {
+                        this.SeriesCollection.Add(new LineSeries
+                        {
+                            Title = "Complement #" + ( i + 1 ),
+                            StrokeThickness = 1,
+                            LineSmoothness = 0,
+                            Fill = System.Windows.Media.Brushes.Transparent,
+                            PointGeometry = null,
+                            DataLabels = false,
+                            Values = this._fuzzySets[i].Complement().GetPlot()
+                        });
+                    }
+                    break;
                 default:
                     break;
             }

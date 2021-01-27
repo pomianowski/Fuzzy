@@ -2,6 +2,7 @@
     x:Class="FuzzyNumbers.Views.Pages.Dashboard"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:FuzzyNumbers.Assets.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:FuzzyNumbers.Views.Pages"
     xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
@@ -209,5 +210,10 @@
                 </Grid>
             </Grid>
         </ScrollViewer>
+        <controls:Popup
+            x:Name="popupMain"
+            Grid.RowSpan="2"
+            Enabled="False"
+            Timeout="4000" />
     </Grid>
 </Page>

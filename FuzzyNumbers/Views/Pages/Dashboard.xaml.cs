@@ -113,6 +113,13 @@ namespace FuzzyNumbers.Views.Pages
             DataContext = this;
         }
 
+        private void ShowPopup(string header, string message = null)
+        {
+            popupMain.Header = header;
+            popupMain.Message = message;
+            popupMain.Show();
+        }
+
         private FuzzyValue ParseFuzzyValue(string text)
         {
             text = text.Trim();
@@ -123,11 +130,19 @@ namespace FuzzyNumbers.Views.Pages
             text = Regex.Replace(text, "[^0-9,.-]", "");
             string[] points = text.Split(',');
 
+#if DEBUG
+            foreach (string point in points)
+                System.Diagnostics.Debug.WriteLine("Single detected point for string (" + text + "), is: " + point);
+#endif
+
             double point_x = 0;
             double point_value = 0;
 
             if (points.Length > 2 || !double.TryParse(points[0], out point_x))
                 return new FuzzyValue { value = null, x = null };
+
+            if (points.Length > 1)
+                double.TryParse(points[1], out point_value);
 
             return new FuzzyValue { x = point_x, value = point_value };
         }
@@ -159,9 +174,16 @@ namespace FuzzyNumbers.Views.Pages
                     break;
             }
 
-            FuzzyValue value_a = ParseFuzzyValue(textInputOne.Text);
-            FuzzyValue value_b = ParseFuzzyValue(textInputTwo.Text);
-            FuzzyValue value_c = ParseFuzzyValue(textInputThree.Text);
+            if (selectedType == CalcType.Singleton && string.IsNullOrEmpty(textInputOne.Text))
+            {
+                this.ShowPopup("It won't work!", "You must enter an (x) value for Singleton.");
+                return;
+            }
+
+            FuzzyValue value_a = this.ParseFuzzyValue(textInputOne.Text);
+            FuzzyValue value_b = this.ParseFuzzyValue(textInputTwo.Text);
+            FuzzyValue value_c = this.ParseFuzzyValue(textInputThree.Text);
+
 
             this._fuzzySets.Add(new FuzzySet {
                 Type = selectedType,

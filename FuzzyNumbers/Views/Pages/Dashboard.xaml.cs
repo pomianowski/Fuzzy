@@ -173,17 +173,16 @@ namespace FuzzyNumbers.Views.Pages
                     title = "T";
                     break;
             }
-
-            if (selectedType == CalcType.Singleton && string.IsNullOrEmpty(textInputOne.Text))
-            {
-                this.ShowPopup("It won't work!", "You must enter an (x) value for Singleton.");
+            
+            if(!this.VerifyForm(selectedType))
                 return;
-            }
 
             FuzzyValue value_a = this.ParseFuzzyValue(textInputOne.Text);
             FuzzyValue value_b = this.ParseFuzzyValue(textInputTwo.Text);
             FuzzyValue value_c = this.ParseFuzzyValue(textInputThree.Text);
 
+            if(!this.VerifyCorrectness(selectedType, value_a, value_b, value_c))
+                return;
 
             this._fuzzySets.Add(new FuzzySet {
                 Type = selectedType,
@@ -212,6 +211,71 @@ namespace FuzzyNumbers.Views.Pages
             System.Diagnostics.Debug.WriteLine("FuzzySet #" + index + " value c is x = " + this._fuzzySets[index].c.x.ToString());
             System.Diagnostics.Debug.WriteLine("FuzzySet #" + index + " value c is value = " + this._fuzzySets[index].c.value.ToString());
 #endif
+        }
+
+        private bool VerifyForm(CalcType selectedType)
+        {
+            if (selectedType == CalcType.Singleton && string.IsNullOrEmpty(textInputOne.Text))
+            {
+                this.ShowPopup("It won't work!", "You must enter an (x) value for Singleton.");
+                return false;
+            }
+            else if (selectedType == CalcType.Gamma && string.IsNullOrEmpty(textInputOne.Text) && string.IsNullOrEmpty(textInputTwo.Text))
+            {
+                this.ShowPopup("It won't work!", "You must enter an (x,a) and (x,b) value for Gamma.");
+                return false;
+            }
+            else if (selectedType == CalcType.L && string.IsNullOrEmpty(textInputOne.Text) && string.IsNullOrEmpty(textInputTwo.Text))
+            {
+                this.ShowPopup("It won't work!", "You must enter an (x,a) and (x,b) value for L.");
+                return false;
+            }
+            else if (selectedType == CalcType.T && string.IsNullOrEmpty(textInputOne.Text) && string.IsNullOrEmpty(textInputTwo.Text) && string.IsNullOrEmpty(textInputThree.Text))
+            {
+                this.ShowPopup("It won't work!", "You must enter an (x,a), (x,b) and (x,c) value for t.");
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool VerifyCorrectness(CalcType selectedType, FuzzyValue a, FuzzyValue b, FuzzyValue c)
+        {
+            //Value must exist
+            if (selectedType == CalcType.Singleton && a.x == null)
+            {
+                this.ShowPopup("It won't work!", "The specified (x) value is not valid.");
+                return false;
+            }
+            else if ((selectedType == CalcType.Gamma || selectedType == CalcType.T || selectedType == CalcType.L) && (a.x == null || a.value == null))
+            {
+                this.ShowPopup("It won't work!", "The specified (x,a) value is not valid.");
+                return false;
+            }
+            else if ((selectedType == CalcType.Gamma || selectedType == CalcType.T || selectedType == CalcType.L) && (b.x == null || b.value == null))
+            {
+                this.ShowPopup("It won't work!", "The specified (x,b) value is not valid.");
+                return false;
+            }
+            else if (selectedType == CalcType.T && (c.x == null || c.value == null))
+            {
+                this.ShowPopup("It won't work!", "The specified (x,c) value is not valid.");
+                return false;
+            }
+
+            //Incorrect size
+            if ((selectedType == CalcType.Gamma || selectedType == CalcType.T || selectedType == CalcType.L) && a.value > b.value)
+            {
+                this.ShowPopup("It won't work!", "The value of 'a' cannot be greater than the value of 'b'");
+                return false;
+            }
+            else if (selectedType == CalcType.T && b.value > c.value)
+            {
+                this.ShowPopup("It won't work!", "The value of 'b' cannot be greater than the value of 'c'");
+                return false;
+            }
+
+            return true;
         }
 
         private void TextBoxInputFuzzy_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)

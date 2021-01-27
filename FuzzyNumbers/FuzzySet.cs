@@ -54,14 +54,23 @@ namespace FuzzyNumbers
                     points.Add(new ObservablePoint((int)a.x, 1));
                     break;
                 case CalcType.Gamma:
-                    points.Add(new ObservablePoint((int)a.value - 4, 0));
+                    points.Add(new ObservablePoint((int)a.value - 5, 0));
                     points.Add(new ObservablePoint((int)a.value, 0));
                     points.Add(new ObservablePoint((int)b.value, 1));
-                    points.Add(new ObservablePoint((int)b.value + 4, 1));
+                    points.Add(new ObservablePoint((int)b.value + 5, 1));
                     break;
                 case CalcType.L:
+                    points.Add(new ObservablePoint((int)a.value - 5, 1));
+                    points.Add(new ObservablePoint((int)a.value, 1));
+                    points.Add(new ObservablePoint((int)b.value, 0));
+                    points.Add(new ObservablePoint((int)b.value + 5, 0));
                     break;
                 case CalcType.T:
+                    points.Add(new ObservablePoint((int)a.value - 5, 0));
+                    points.Add(new ObservablePoint((int)a.value, 0));
+                    points.Add(new ObservablePoint((int)b.value, 1));
+                    points.Add(new ObservablePoint((int)c.value, 0));
+                    points.Add(new ObservablePoint((int)c.value + 5, 0));
                     break;
                 default:
                     break;

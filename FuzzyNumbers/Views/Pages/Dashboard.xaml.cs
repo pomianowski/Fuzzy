@@ -263,38 +263,68 @@ namespace FuzzyNumbers.Views.Pages
                 return false;
             }
 
-            //Incorrect size
-            if ((selectedType == CalcType.Gamma || selectedType == CalcType.T || selectedType == CalcType.L) && a.value > b.value)
+            switch (selectedType)
             {
-                this.ShowPopup("It won't work!", "The value of 'a' cannot be greater than the value of 'b'");
-                return false;
+                case CalcType.Gamma:
+                    //a < b
+                    //x1 < x2
+                    if (a.value > b.value)
+                    {
+                        this.ShowPopup("It won't work!", "The value of 'a' cannot be greater than the value of 'b'");
+                        return false;
+                    }
+                    else if (a.x > b.x)
+                    {
+                        this.ShowPopup("It won't work!", "The value of x in (x,a) cannot be greater than the value of x in (x,b)");
+                        return false;
+                    }
+                    break;
+                case CalcType.L:
+                    // a > b
+                    // x1 > x2
+                    if (a.value > b.value)
+                    {
+                        this.ShowPopup("It won't work!", "The value of 'a' cannot be greater than the value of 'b'");
+                        return false;
+                    }
+                    else if (a.x < b.x)
+                    {
+                        this.ShowPopup("It won't work!", "The value of x in (x,a) must be greater than the value of x in (x,b)");
+                        return false;
+                    }
+                    break;
+                case CalcType.T:
+                    //a < b < c
+                    //x1 < x2 > x2
+                    if (a.value > b.value)
+                    {
+                        this.ShowPopup("It won't work!", "The value of 'a' cannot be greater than the value of 'b'");
+                        return false;
+                    }
+                    else if(b.value > c.value)
+                    {
+                        this.ShowPopup("It won't work!", "The value of 'b' cannot be greater than the value of 'c'");
+                    }
+                    else if (a.x > b.x)
+                    {
+                        this.ShowPopup("It won't work!", "The value of x in (x,a) cannot be greater than the value of x in (x,b)");
+                        return false;
+                    }
+                    else if (b.x < c.x)
+                    {
+                        this.ShowPopup("It won't work!", "The value of x in (x,b) cannot be greater than the value of x in (x,c)");
+                        return false;
+                    }
+                    break;
             }
-            else if (selectedType == CalcType.T && b.value > c.value)
-            {
-                this.ShowPopup("It won't work!", "The value of 'b' cannot be greater than the value of 'c'");
-                return false;
-            }
-            else if ((selectedType == CalcType.Gamma || selectedType == CalcType.T) && a.x < b.x)
-            {
-                this.ShowPopup("It won't work!", "The value of x in (x,a) cannot be greater than the value of x in (x,b)");
-                return false;
-            }
-            else if ((selectedType == CalcType.L) && a.x > b.x)
-            {
-                this.ShowPopup("It won't work!", "The value of x in (x,a) must be greater than the value of x in (x,b)");
-                return false;
-            }
-            else if ((selectedType == CalcType.T) && b.x > c.x)
-            {
-                this.ShowPopup("It won't work!", "The value of x in (x,b) must be greater than the value of x in (x,c)");
-                return false;
-            }
-            else if ((selectedType == CalcType.Gamma || selectedType == CalcType.T || selectedType == CalcType.L) && (a.x < 0 || a.x > 1) )
+            
+            //X must be between
+            if ((selectedType == CalcType.Gamma || selectedType == CalcType.L || selectedType == CalcType.T) && (a.x < 0 || a.x > 1) )
             {
                 this.ShowPopup("It won't work!", "The value of x in (x,a) must be between 0-1");
                 return false;
             }
-            else if ((selectedType == CalcType.Gamma || selectedType == CalcType.T || selectedType == CalcType.L) && (b.x < 0 || b.x > 1))
+            else if ((selectedType == CalcType.Gamma || selectedType == CalcType.L || selectedType == CalcType.T) && (b.x < 0 || b.x > 1))
             {
                 this.ShowPopup("It won't work!", "The value of x in (x,b) must be between 0-1");
                 return false;

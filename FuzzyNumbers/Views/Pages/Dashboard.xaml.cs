@@ -184,6 +184,7 @@ namespace FuzzyNumbers.Views.Pages
             if(!this.VerifyCorrectness(selectedType, value_a, value_b, value_c))
                 return;
 
+            this.ShowPopup("Addition", "A new fuzzy set is just being added.");
             this._fuzzySets.Add(new FuzzySet {
                 Type = selectedType,
                 a = value_a,
@@ -351,25 +352,54 @@ namespace FuzzyNumbers.Views.Pages
         {
             string tag = (sender as Button).Tag.ToString().ToLower().Trim();
 
+            if(this._fuzzySets.Count < 1)
+            {
+                this.ShowPopup("It won't work!", "To perform the operation, it is required to add at least one fuzzy set.");
+                return;
+            }
+            else if (this._fuzzySets.Count > 128)
+            {
+                this.ShowPopup("Tranquilo amigo!", "The program cannot operate with such a large number of sets.");
+                return;
+            }
+
 #if DEBUG
             System.Diagnostics.Debug.WriteLine("Calc tag is: " + tag);
 #endif
             switch (tag)
             {
                 case "complement":
+                    this.ShowPopup("Calculating", "Computing complements of fuzzy sets.");
+
+                    int index = 0;
+                    FuzzySet complement;
+                    List<FuzzySet> tempSets = new List<FuzzySet> { };
+
                     for (int i = 0; i < this._fuzzySets.Count; i++)
                     {
+                        if (this._fuzzySets[i].Type == CalcType.Singleton)
+                            continue;
+
+                        index++;
+
+                        complement = this._fuzzySets[i].Complement();
+                        tempSets.Add(complement);
+
                         this.SeriesCollection.Add(new LineSeries
                         {
-                            Title = "Complement #" + ( i + 1 ),
+                            Title = "Complement #" + ( index + this._fuzzySets.Count),
                             StrokeThickness = 1,
                             LineSmoothness = 0,
                             Fill = System.Windows.Media.Brushes.Transparent,
                             PointGeometry = null,
                             DataLabels = false,
-                            Values = this._fuzzySets[i].Complement().GetPlot()
+                            Values = complement.GetPlot()
                         });
                     }
+
+                    foreach (FuzzySet set in tempSets)
+                        this._fuzzySets.Add(set);
+
                     break;
                 default:
                     break;
@@ -384,6 +414,19 @@ namespace FuzzyNumbers.Views.Pages
             this.ShowPopup("Processing...", "All sets of fuzzy numbers are being removed...");
             this._fuzzySets = new List<FuzzySet> { };
             this.SeriesCollection.Clear();
+        }
+
+        private void Button_Import(object sender, RoutedEventArgs e)
+        {
+            this.ShowPopup("Processing...", "All sets of fuzzy numbers are being imported...");
+        }
+        private void Button_Export(object sender, RoutedEventArgs e)
+        {
+            if (this._fuzzySets.Count < 1)
+            {
+                this.ShowPopup("It won't work!", "You must add at least one fuzzy set to perform the export operation");
+                return;
+            }
         }
 
         private void Button_AddNew(object sender, RoutedEventArgs e)

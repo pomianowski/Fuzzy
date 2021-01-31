@@ -108,14 +108,15 @@
                         HorizontalAlignment="Stretch">
                         <Button
                             Background="Transparent"
-                            Click="Button_Clear"
-                            Style="{StaticResource MaterialButton}">
+                            Click="Button_Calc"
+                            Style="{StaticResource MaterialButton}"
+                            Tag="complement">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock
                                     Margin="0"
                                     Style="{StaticResource MaterialIcon}"
-                                    Text="&#xEAED;" />
-                                <TextBlock Margin="8,0,0,0" Text="Clear all sets" />
+                                    Text="&#xEDBD;" />
+                                <TextBlock Margin="8,0,0,0" Text="Complement of all sets" />
                             </StackPanel>
                         </Button>
                         <Button
@@ -137,20 +138,6 @@
                             Background="Transparent"
                             Click="Button_Calc"
                             Style="{StaticResource MaterialButton}"
-                            Tag="complement">
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock
-                                    Margin="0"
-                                    Style="{StaticResource MaterialIcon}"
-                                    Text="&#xEDBD;" />
-                                <TextBlock Margin="8,0,0,0" Text="Complement of all sets" />
-                            </StackPanel>
-                        </Button>
-                        <Button
-                            Margin="0,4,0,0"
-                            Background="Transparent"
-                            Click="Button_Calc"
-                            Style="{StaticResource MaterialButton}"
                             Tag="sum">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock
@@ -160,8 +147,21 @@
                                 <TextBlock Margin="8,0,0,0" Text="Summary of all sets" />
                             </StackPanel>
                         </Button>
+                        <Button
+                            Margin="0,4,0,0"
+                            Background="Transparent"
+                            Click="Button_Clear"
+                            Style="{StaticResource MaterialButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="0"
+                                    Style="{StaticResource MaterialIcon}"
+                                    Text="&#xEAED;" />
+                                <TextBlock Margin="8,0,0,0" Text="Clear all sets" />
+                            </StackPanel>
+                        </Button>
                     </StackPanel>
-                    <Grid Grid.Row="2" Margin="0,8,0,0">
+                    <Grid Grid.Row="2" Margin="0,4,0,0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*" />
@@ -170,8 +170,8 @@
                             Grid.Column="0"
                             Margin="0,0,2,0"
                             Background="Transparent"
-                            Style="{StaticResource MaterialButton}"
-                            Tag="complement">
+                            Click="Button_Import"
+                            Style="{StaticResource MaterialButton}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock
                                     Margin="0"
@@ -184,8 +184,8 @@
                             Grid.Column="1"
                             Margin="2,0,0,0"
                             Background="Transparent"
-                            Style="{StaticResource MaterialButton}"
-                            Tag="complement">
+                            Click="Button_Export"
+                            Style="{StaticResource MaterialButton}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock
                                     Margin="0"
@@ -225,7 +225,7 @@
                     x:Name="popupMain"
                     Grid.Column="1"
                     Enabled="False"
-                    Timeout="4000" />
+                    Timeout="2000" />
             </Grid>
         </ScrollViewer>
     </Grid>

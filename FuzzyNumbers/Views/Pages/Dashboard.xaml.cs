@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -6,6 +7,7 @@ using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Helpers;
 using LiveCharts.Wpf;
+using Microsoft.Win32;
 
 namespace FuzzyNumbers.Views.Pages
 {
@@ -418,7 +420,52 @@ namespace FuzzyNumbers.Views.Pages
 
         private void Button_Import(object sender, RoutedEventArgs e)
         {
-            this.ShowPopup("Processing...", "All sets of fuzzy numbers are being imported...");
+            OpenFileDialog fileDialog = new OpenFileDialog()
+            {
+                Title = "Fuzzy Sets",
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                CheckPathExists = true,
+                Multiselect = false,
+                Filter = "Fuzzy set|*.fset|All files (*.*)|*.*"
+            };
+
+            if (fileDialog.ShowDialog() == true)
+            {
+                try
+                {
+                    List<FuzzySet> importedSets = Encoder.Read<List<FuzzySet>>(fileDialog.FileName);
+                    this.ShowPopup("Processing...", "All sets of fuzzy numbers are being imported...");
+
+                    foreach (FuzzySet single in importedSets)
+                    {
+#if DEBUG
+                        System.Diagnostics.Debug.WriteLine("Imported set");
+                        System.Diagnostics.Debug.WriteLine(single.a.x);
+                        System.Diagnostics.Debug.WriteLine(single.a.value);
+                        System.Diagnostics.Debug.WriteLine(single.b.x);
+                        System.Diagnostics.Debug.WriteLine(single.b.value);
+                        System.Diagnostics.Debug.WriteLine(single.c.x);
+                        System.Diagnostics.Debug.WriteLine(single.c.value);
+#endif
+                        this._fuzzySets.Add(single);
+
+                        this.SeriesCollection.Add(new LineSeries
+                        {
+                            Title = "(IMP) " + single.Type.ToString() + " #" + this._fuzzySets.Count,
+                            StrokeThickness = 1,
+                            LineSmoothness = 0,
+                            Fill = System.Windows.Media.Brushes.Transparent,
+                            PointGeometry = null,
+                            DataLabels = false,
+                            Values = single.GetPlot()
+                        });
+                    }
+                }
+                catch
+                {
+                    this.ShowPopup("It won't work!", "Failed to correctly import fuzzy sets from the file.");
+                }    
+            }
         }
         private void Button_Export(object sender, RoutedEventArgs e)
         {
@@ -426,6 +473,29 @@ namespace FuzzyNumbers.Views.Pages
             {
                 this.ShowPopup("It won't work!", "You must add at least one fuzzy set to perform the export operation");
                 return;
+            }
+            else
+            {
+                SaveFileDialog fileDialog = new SaveFileDialog()
+                {
+                    Title = "Fuzzy Sets",
+                    RestoreDirectory = true,
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                    Filter = "Fuzzy set|*.fset|All files (*.*)|*.*"
+                };
+
+                if (fileDialog.ShowDialog() == true)
+                {
+                    try
+                    {
+                        this.ShowPopup("Processing...", "All sets of fuzzy numbers are being exported to file:\n" + fileDialog.FileName);
+                        Encoder.Write<List<FuzzySet>>(fileDialog.FileName, this._fuzzySets);
+                    }
+                    catch
+                    {
+                        this.ShowPopup("It won't work!", "Failed to correctly export fuzzy sets from the file.");
+                    }
+                }
             }
         }
 

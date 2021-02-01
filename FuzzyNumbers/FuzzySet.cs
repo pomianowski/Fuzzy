@@ -28,12 +28,14 @@ namespace FuzzyNumbers
         T
     }
 
+    [Serializable]
     public struct FuzzyValue
     {
         public double? x { get; set; }
         public double? value { get; set; }
     }
 
+    [Serializable]
     public class FuzzySet
     {
         public CalcType Type = CalcType.Unknown;

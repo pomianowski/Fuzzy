@@ -19,6 +19,8 @@ namespace FuzzyNumbers
      * zapisywanie i wczytywanie z pliku.
     */
 
+    //
+
     public enum CalcType
     {
         Unknown = 0,
@@ -92,34 +94,13 @@ namespace FuzzyNumbers
             FuzzySet freturn = this;
 
             if(freturn.a.x != null)
-            {
-                if (freturn.a.x == 1)
-                    freturn.a.x = 0;
-                else if (freturn.a.x == 0)
-                    freturn.a.x = 1;
-                else
-                    freturn.a.x = 1 - freturn.a.x;
-            }
+                freturn.a.x = 1 - freturn.a.x;
 
             if (freturn.b.x != null)
-            {
-                if (freturn.b.x == 1)
-                    freturn.b.x = 0;
-                else if (freturn.b.x == 0)
-                    freturn.b.x = 1;
-                else
-                    freturn.b.x = 1 - freturn.b.x;
-            }
+                freturn.b.x = 1 - freturn.b.x;
 
             if (freturn.c.x != null)
-            {
-                if (freturn.c.x == 1)
-                    freturn.c.x = 0;
-                else if (freturn.c.x == 0)
-                    freturn.c.x = 1;
-                else
-                    freturn.c.x = 1 - freturn.c.x;
-            }
+                freturn.c.x = 1 - freturn.c.x;
 
             return freturn;
         }

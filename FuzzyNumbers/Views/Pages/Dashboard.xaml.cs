@@ -115,10 +115,11 @@ namespace FuzzyNumbers.Views.Pages
             DataContext = this;
         }
 
-        private void ShowPopup(string header, string message = null)
+        private void ShowPopup(string header, string message = null, int time = 2000)
         {
             popupMain.Header = header;
             popupMain.Message = message;
+            popupMain.Timeout = time;
             popupMain.Show();
         }
 
@@ -413,7 +414,7 @@ namespace FuzzyNumbers.Views.Pages
             if (this._fuzzySets.Count < 1)
                 return;
 
-            this.ShowPopup("Processing...", "All sets of fuzzy numbers are being removed...");
+            this.ShowPopup("Processing...", "All sets of fuzzy numbers are being removed...", 1000);
             this._fuzzySets = new List<FuzzySet> { };
             this.SeriesCollection.Clear();
         }
@@ -434,7 +435,7 @@ namespace FuzzyNumbers.Views.Pages
                 try
                 {
                     List<FuzzySet> importedSets = Encoder.Read<List<FuzzySet>>(fileDialog.FileName);
-                    this.ShowPopup("Processing...", "All sets of fuzzy numbers are being imported...");
+                    this.ShowPopup("Processing...", "All sets of fuzzy numbers are being imported...", 1000);
 
                     foreach (FuzzySet single in importedSets)
                     {
@@ -451,7 +452,7 @@ namespace FuzzyNumbers.Views.Pages
 
                         this.SeriesCollection.Add(new LineSeries
                         {
-                            Title = "(IMP) " + single.Type.ToString() + " #" + this._fuzzySets.Count,
+                            Title = "[I] " + single.Type.ToString() + " #" + this._fuzzySets.Count,
                             StrokeThickness = 1,
                             LineSmoothness = 0,
                             Fill = System.Windows.Media.Brushes.Transparent,
@@ -463,7 +464,7 @@ namespace FuzzyNumbers.Views.Pages
                 }
                 catch
                 {
-                    this.ShowPopup("It won't work!", "Failed to correctly import fuzzy sets from the file.");
+                    this.ShowPopup("It won't work!", "Failed to correctly import fuzzy sets from the file.", 5000);
                 }    
             }
         }
@@ -471,7 +472,7 @@ namespace FuzzyNumbers.Views.Pages
         {
             if (this._fuzzySets.Count < 1)
             {
-                this.ShowPopup("It won't work!", "You must add at least one fuzzy set to perform the export operation");
+                this.ShowPopup("It won't work!", "You must add at least one fuzzy set to perform the export operation", 5000);
                 return;
             }
             else
@@ -488,12 +489,12 @@ namespace FuzzyNumbers.Views.Pages
                 {
                     try
                     {
-                        this.ShowPopup("Processing...", "All sets of fuzzy numbers are being exported to file:\n" + fileDialog.FileName);
+                        this.ShowPopup("Processing...", "All sets of fuzzy numbers are being exported to file:\n" + fileDialog.FileName, 5000);
                         Encoder.Write<List<FuzzySet>>(fileDialog.FileName, this._fuzzySets);
                     }
                     catch
                     {
-                        this.ShowPopup("It won't work!", "Failed to correctly export fuzzy sets from the file.");
+                        this.ShowPopup("It won't work!", "Failed to correctly export fuzzy sets from the file.", 5000);
                     }
                 }
             }

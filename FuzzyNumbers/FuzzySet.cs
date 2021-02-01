@@ -19,8 +19,6 @@ namespace FuzzyNumbers
      * zapisywanie i wczytywanie z pliku.
     */
 
-    //
-
     public enum CalcType
     {
         Unknown = 0,
@@ -42,6 +40,7 @@ namespace FuzzyNumbers
     {
         public CalcType Type = CalcType.Unknown;
 
+        public List<FuzzyValue> absolutePoints = new List<FuzzyValue> { };
 
         public FuzzyValue a = new FuzzyValue { value = null, x = null };
         public FuzzyValue b = new FuzzyValue { value = null, x = null };
@@ -50,6 +49,29 @@ namespace FuzzyNumbers
         public ChartValues<ObservablePoint> GetPlot()
         {
             ChartValues<ObservablePoint> points = new ChartValues<ObservablePoint> { };
+
+            if(this.absolutePoints != null && this.absolutePoints.Count > 0)
+            {
+                for (int i = 0; i < this.absolutePoints.Count; i++)
+                {
+                    if(i == 0)
+                    {
+                        points.Add(new ObservablePoint((double)this.absolutePoints[i].value -5, (double)this.absolutePoints[i].x));
+                    }
+#if DEBUG
+                    System.Diagnostics.Debug.WriteLine("absolutePoint");
+                    System.Diagnostics.Debug.WriteLine(this.absolutePoints[i].x);
+                    System.Diagnostics.Debug.WriteLine(this.absolutePoints[i].value);
+#endif
+                    points.Add(new ObservablePoint((double)this.absolutePoints[i].value, (double)this.absolutePoints[i].x));
+
+                    if (i == this.absolutePoints.Count - 1)
+                    {
+                        points.Add(new ObservablePoint((double)this.absolutePoints[i].value + 5, (double)this.absolutePoints[i].x));
+                    }
+                }
+                return points;
+            }
 
             switch (this.Type)
             {
@@ -86,7 +108,69 @@ namespace FuzzyNumbers
 
         public FuzzySet Sum(FuzzySet set)
         {
-            return set;
+            if(this.Type == CalcType.Gamma && set.Type == CalcType.L)
+                return SumLGamma(set, this);
+            else if(this.Type == CalcType.L && set.Type == CalcType.Gamma)
+                return SumLGamma(this, set);
+
+            return new FuzzySet{ };
+        }
+
+        private FuzzySet SumLGamma(FuzzySet setOne, FuzzySet setTwo)
+        {
+            FuzzySet returnedSet = new FuzzySet { };
+
+            if (setOne.b.value < setTwo.a.value)
+            {
+                returnedSet.absolutePoints.Add(new FuzzyValue
+                {
+                    x = setOne.a.x,
+                    value = setOne.a.value
+                });
+                returnedSet.absolutePoints.Add(new FuzzyValue
+                {
+                    x = setOne.b.x,
+                    value = setOne.b.value
+                });
+                returnedSet.absolutePoints.Add(new FuzzyValue
+                {
+                    x = setTwo.a.x,
+                    value = setTwo.a.value
+                });
+                returnedSet.absolutePoints.Add(new FuzzyValue
+                {
+                    x = setTwo.b.x,
+                    value = setTwo.b.value
+                });
+            }
+            else if (setOne.b.value == setTwo.a.value)
+            {
+                returnedSet.absolutePoints.Add(new FuzzyValue
+                {
+                    x = setOne.a.x,
+                    value = setOne.a.value
+                });
+                returnedSet.absolutePoints.Add(new FuzzyValue
+                {
+                    x = setOne.b.x,
+                    value = setOne.b.value
+                });
+                returnedSet.absolutePoints.Add(new FuzzyValue
+                {
+                    x = setTwo.b.x,
+                    value = setTwo.b.value
+                });
+            }
+            else if(setOne.a.value >= setTwo.b.value)
+            {
+                returnedSet.absolutePoints.Add(new FuzzyValue
+                {
+                    x = setOne.a.x,
+                    value = setOne.a.value
+                });
+            }
+
+            return returnedSet;
         }
 
         public FuzzySet Complement()

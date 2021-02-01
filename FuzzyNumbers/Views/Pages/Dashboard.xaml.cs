@@ -404,8 +404,31 @@ namespace FuzzyNumbers.Views.Pages
                         this._fuzzySets.Add(set);
 
                     break;
-                default:
+                    case "sum":
+                        FuzzySet summary = this._fuzzySets[0];
+
+                        for (int i = 1; i < this._fuzzySets.Count; i++)
+                        {
+                            summary = summary.Sum(this._fuzzySets[i]);
+                        }
+
+                        this.ShowPopup("Processing...", "The sum of the fuzzy sets is being calculated.", 1000);
+
+                        this.SeriesCollection.Add(new LineSeries
+                        {
+                            Title = "Summary #" + (this._fuzzySets.Count + 1),
+                            StrokeThickness = 1,
+                            LineSmoothness = 0,
+                            Fill = System.Windows.Media.Brushes.Transparent,
+                            PointGeometry = null,
+                            DataLabels = false,
+                            Values = summary.GetPlot()
+                        });
+
+                        this._fuzzySets.Add(summary);
                     break;
+                        default:
+                            break;
             }
         }
 

@@ -38,6 +38,8 @@ namespace FuzzyNumbers
     [Serializable]
     public class FuzzySet
     {
+        private static int _extender = 6;
+
         public CalcType Type = CalcType.Unknown;
 
         public List<FuzzyValue> absolutePoints = new List<FuzzyValue> { };
@@ -54,21 +56,18 @@ namespace FuzzyNumbers
             {
                 for (int i = 0; i < this.absolutePoints.Count; i++)
                 {
-                    if(i == 0)
-                    {
-                        points.Add(new ObservablePoint((double)this.absolutePoints[i].value -5, (double)this.absolutePoints[i].x));
-                    }
 #if DEBUG
                     System.Diagnostics.Debug.WriteLine("absolutePoint");
                     System.Diagnostics.Debug.WriteLine(this.absolutePoints[i].x);
                     System.Diagnostics.Debug.WriteLine(this.absolutePoints[i].value);
 #endif
+                    if(i == 0)
+                        points.Add(new ObservablePoint((double)this.absolutePoints[i].value - _extender, (double)this.absolutePoints[i].x));
+                    
                     points.Add(new ObservablePoint((double)this.absolutePoints[i].value, (double)this.absolutePoints[i].x));
 
                     if (i == this.absolutePoints.Count - 1)
-                    {
-                        points.Add(new ObservablePoint((double)this.absolutePoints[i].value + 5, (double)this.absolutePoints[i].x));
-                    }
+                        points.Add(new ObservablePoint((double)this.absolutePoints[i].value + _extender, (double)this.absolutePoints[i].x));
                 }
                 return points;
             }
@@ -81,17 +80,17 @@ namespace FuzzyNumbers
                     break;
                 case CalcType.Gamma:
                 case CalcType.L:
-                    points.Add(new ObservablePoint((double)a.value - 5, (double)a.x));
+                    points.Add(new ObservablePoint((double)a.value - _extender, (double)a.x));
                     points.Add(new ObservablePoint((double)a.value, (double)a.x));
                     points.Add(new ObservablePoint((double)b.value, (double)b.x));
-                    points.Add(new ObservablePoint((double)b.value + 5, (double)b.x));
+                    points.Add(new ObservablePoint((double)b.value + _extender, (double)b.x));
                     break;
                 case CalcType.T:
-                    points.Add(new ObservablePoint((double)a.value - 5, (double)a.x));
+                    points.Add(new ObservablePoint((double)a.value - _extender, (double)a.x));
                     points.Add(new ObservablePoint((double)a.value, (double)a.x));
                     points.Add(new ObservablePoint((double)b.value, (double)b.x));
                     points.Add(new ObservablePoint((double)c.value, (double)c.x));
-                    points.Add(new ObservablePoint((double)c.value + 5, (double)c.x));
+                    points.Add(new ObservablePoint((double)c.value + _extender, (double)c.x));
                     break;
                 default:
                     break;

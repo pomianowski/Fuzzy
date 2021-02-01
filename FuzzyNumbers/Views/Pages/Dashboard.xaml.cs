@@ -22,97 +22,28 @@ namespace FuzzyNumbers.Views.Pages
         {
             InitializeComponent();
 
-            this._fuzzySets = new List<FuzzySet> { };
             this.InitializeChart();
         }
 
         private void InitializeChart()
         {
-            SeriesCollection = new SeriesCollection
-            {
-                /*new LineSeries
-                {
-                    Title = "Fuzzy number #1",
-                    StrokeThickness = 1,
-                    LineSmoothness = 0,
-                    PointGeometry = null,
-                    Fill = System.Windows.Media.Brushes.Transparent,
-                    DataLabels = false,
-                    Values = new ChartValues<double> { double.NaN, double.NaN, double.NaN, double.NaN, 0, 1, 1, 1, 1, 1, 1, 1, 0 }
-                },
-                new LineSeries
-                {
-                    Title = "Fuzzy number #2",
-                    StrokeThickness = 1,
-                    LineSmoothness = 0,
-                    Fill = System.Windows.Media.Brushes.Transparent,
-                    PointGeometry = null,
-                    DataLabels = false,
-                    Values = new ChartValues<double> { double.NaN, double.NaN, double.NaN, double.NaN,  double.NaN, 0, 1, 1, 1, 1, 1 , 0 },
-                },
-                new LineSeries
-                {
-                    Title = "Fuzzy number test",
-                    StrokeThickness = 1,
-                    LineSmoothness = 0,
-                    Fill = System.Windows.Media.Brushes.Transparent,
-                    PointGeometry = null,
-                    DataLabels = false,
-                    Values = new ChartValues<ObservablePoint>
-                    {
-                        new ObservablePoint(-2, 0),
-                        new ObservablePoint(-1, 1),
-                        new ObservablePoint(12, 1),
-                        new ObservablePoint(13, 0),
-                    }
-                },
-                new LineSeries
-                {
-                    Title = "Singleton",
-                    StrokeThickness = 1,
-                    LineSmoothness = 0,
-                    Fill = System.Windows.Media.Brushes.Transparent,
-                    PointGeometry = null,
-                    DataLabels = false,
-                    Values = new ChartValues<ObservablePoint>
-                    {
-                        new ObservablePoint(1, 0),
-                        new ObservablePoint(1, 1)
-                    }
-                },
-                new LineSeries
-                {
-                    Title = "Fuzzy number #3",
-                    StrokeThickness = 1,
-                    LineSmoothness = 0,
-                    Fill = System.Windows.Media.Brushes.Transparent,
-                    PointGeometry = null,
-                    DataLabels = false,
-                    Values = new ChartValues<double> { double.NaN, double.NaN, double.NaN, double.NaN,  double.NaN, 0, 1, 1, 1, 1, 0, double.NaN },
-                },
-                new LineSeries
-                {
-                    Title = "Fuzzy number #4",
-                    StrokeThickness = 1,
-                    LineSmoothness = 0,
-                    PointGeometry = null,
-                    Fill = System.Windows.Media.Brushes.Transparent,
-                    DataLabels = false,
-                    Values = new ChartValues<double> { double.NaN, 0, 1, double.NaN,  double.NaN, double.NaN, double.NaN, double.NaN, double.NaN, double.NaN, double.NaN, double.NaN },
-                },
-                new LineSeries
-                {
-                    Title = "Fuzzy number #5",
-                    StrokeThickness = 1,
-                    LineSmoothness = 0,
-                    Fill = System.Windows.Media.Brushes.Transparent,
-                    PointGeometry = null,
-                    DataLabels = false,
-                    Values = new ChartValues<double> { double.NaN, 1, 0, 0,  1, double.NaN, double.NaN, double.NaN, double.NaN, double.NaN, double.NaN, double.NaN },
-                }*/
-            };
-
+            this._fuzzySets = new List<FuzzySet> { };
+            SeriesCollection = new SeriesCollection{};
             DataContext = this;
+        }
+
+        private void DrawSet(string title, IChartValues values)
+        {
+            this.SeriesCollection.Add(new LineSeries
+            {
+                Title = title,
+                StrokeThickness = 1,
+                LineSmoothness = 0,
+                Fill = System.Windows.Media.Brushes.Transparent,
+                PointGeometry = null,
+                DataLabels = false,
+                Values = values
+            });
         }
 
         private void ShowPopup(string header, string message = null, int time = 2000)
@@ -194,16 +125,8 @@ namespace FuzzyNumbers.Views.Pages
                 b = value_b,
                 c = value_c
             });
+            this.DrawSet(title + " #" + _fuzzySets.Count, this._fuzzySets[this._fuzzySets.Count - 1].GetPlot());
 
-            this.SeriesCollection.Add(new LineSeries {
-                Title = title + " #" + _fuzzySets.Count,
-                StrokeThickness = 1,
-                LineSmoothness = 0,
-                Fill = System.Windows.Media.Brushes.Transparent,
-                PointGeometry = null,
-                DataLabels = false,
-                Values = this._fuzzySets[this._fuzzySets.Count - 1].GetPlot()
-            });
             textInputOne.Text = textInputTwo.Text = textInputThree.Text = string.Empty;
 
 #if DEBUG
@@ -386,18 +309,8 @@ namespace FuzzyNumbers.Views.Pages
                         index++;
 
                         complement = this._fuzzySets[i].Complement();
+                        this.DrawSet("Complement #" + (index + this._fuzzySets.Count), complement.GetPlot());
                         tempSets.Add(complement);
-
-                        this.SeriesCollection.Add(new LineSeries
-                        {
-                            Title = "Complement #" + ( index + this._fuzzySets.Count),
-                            StrokeThickness = 1,
-                            LineSmoothness = 0,
-                            Fill = System.Windows.Media.Brushes.Transparent,
-                            PointGeometry = null,
-                            DataLabels = false,
-                            Values = complement.GetPlot()
-                        });
                     }
 
                     foreach (FuzzySet set in tempSets)
@@ -414,17 +327,7 @@ namespace FuzzyNumbers.Views.Pages
 
                         this.ShowPopup("Processing...", "The sum of the fuzzy sets is being calculated.", 1000);
 
-                        this.SeriesCollection.Add(new LineSeries
-                        {
-                            Title = "Summary #" + (this._fuzzySets.Count + 1),
-                            StrokeThickness = 1,
-                            LineSmoothness = 0,
-                            Fill = System.Windows.Media.Brushes.Transparent,
-                            PointGeometry = null,
-                            DataLabels = false,
-                            Values = summary.GetPlot()
-                        });
-
+                        this.DrawSet("Summary #" + (this._fuzzySets.Count + 1), summary.GetPlot());
                         this._fuzzySets.Add(summary);
                     break;
                         default:
@@ -471,18 +374,8 @@ namespace FuzzyNumbers.Views.Pages
                         System.Diagnostics.Debug.WriteLine(single.c.x);
                         System.Diagnostics.Debug.WriteLine(single.c.value);
 #endif
+                        this.DrawSet("[I] " + single.Type.ToString() + " #" + this._fuzzySets.Count, single.GetPlot());
                         this._fuzzySets.Add(single);
-
-                        this.SeriesCollection.Add(new LineSeries
-                        {
-                            Title = "[I] " + single.Type.ToString() + " #" + this._fuzzySets.Count,
-                            StrokeThickness = 1,
-                            LineSmoothness = 0,
-                            Fill = System.Windows.Media.Brushes.Transparent,
-                            PointGeometry = null,
-                            DataLabels = false,
-                            Values = single.GetPlot()
-                        });
                     }
                 }
                 catch

@@ -374,7 +374,7 @@ namespace FuzzyNumbers.Views.Pages
                         System.Diagnostics.Debug.WriteLine(single.c.x);
                         System.Diagnostics.Debug.WriteLine(single.c.value);
 #endif
-                        this.DrawSet("[I] " + single.Type.ToString() + " #" + this._fuzzySets.Count, single.GetPlot());
+                        this.DrawSet("[I] " + single.Type.ToString() + " #" + (this._fuzzySets.Count + 1), single.GetPlot());
                         this._fuzzySets.Add(single);
                     }
                 }
@@ -425,10 +425,8 @@ namespace FuzzyNumbers.Views.Pages
         {
             int index = (sender as ComboBox).SelectedIndex;
 
-
             if (textInputOne == null || textInputTwo == null || textInputThree == null)
                 return;
-
 
             switch (index)
             {

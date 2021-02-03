@@ -1,10 +1,10 @@
-﻿using LiveCharts;
-using LiveCharts.Defaults;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LiveCharts;
+using LiveCharts.Defaults;
 
 namespace FuzzyNumbers
 {
@@ -17,7 +17,10 @@ namespace FuzzyNumbers
      * reprezentacja graficzna poszczególnych zbiorów rozmytych oraz wyników,
      * wprowadzanie zbiorów jako krzywych,
      * zapisywanie i wczytywanie z pliku.
-    */
+     */
+
+    //checkbox ciagi operacji, usuwaj wejscia, zostawiaj wyjscia
+    //przykryc nowym gridem
 
     public enum CalcType
     {
@@ -41,7 +44,6 @@ namespace FuzzyNumbers
         private static int _extender = 6;
 
         public CalcType Type = CalcType.Unknown;
-
         public List<FuzzyValue> absolutePoints = new List<FuzzyValue> { };
 
         public FuzzyValue a = new FuzzyValue { value = null, x = null };
@@ -100,92 +102,19 @@ namespace FuzzyNumbers
             return points;
         }
 
-        public FuzzySet Product(FuzzySet set)
+        public FuzzySet Product(FuzzySet sSet)
         {
-            return set;
+            return FuzzySolver.Product(this, sSet);
         }
 
-        public FuzzySet Sum(FuzzySet set)
+        public FuzzySet Sum(FuzzySet sSet)
         {
-            if(this.Type == CalcType.Gamma && set.Type == CalcType.L)
-                return SumLGamma(set, this);
-            else if(this.Type == CalcType.L && set.Type == CalcType.Gamma)
-                return SumLGamma(this, set);
-
-            return new FuzzySet{ };
-        }
-
-        private FuzzySet SumLGamma(FuzzySet setOne, FuzzySet setTwo)
-        {
-            FuzzySet returnedSet = new FuzzySet { };
-
-            if (setOne.b.value < setTwo.a.value)
-            {
-                returnedSet.absolutePoints.Add(new FuzzyValue
-                {
-                    x = setOne.a.x,
-                    value = setOne.a.value
-                });
-                returnedSet.absolutePoints.Add(new FuzzyValue
-                {
-                    x = setOne.b.x,
-                    value = setOne.b.value
-                });
-                returnedSet.absolutePoints.Add(new FuzzyValue
-                {
-                    x = setTwo.a.x,
-                    value = setTwo.a.value
-                });
-                returnedSet.absolutePoints.Add(new FuzzyValue
-                {
-                    x = setTwo.b.x,
-                    value = setTwo.b.value
-                });
-            }
-            else if (setOne.b.value == setTwo.a.value)
-            {
-                returnedSet.absolutePoints.Add(new FuzzyValue
-                {
-                    x = setOne.a.x,
-                    value = setOne.a.value
-                });
-                returnedSet.absolutePoints.Add(new FuzzyValue
-                {
-                    x = setOne.b.x,
-                    value = setOne.b.value
-                });
-                returnedSet.absolutePoints.Add(new FuzzyValue
-                {
-                    x = setTwo.b.x,
-                    value = setTwo.b.value
-                });
-            }
-            else if(setOne.a.value >= setTwo.b.value)
-            {
-                returnedSet.absolutePoints.Add(new FuzzyValue
-                {
-                    x = setOne.a.x,
-                    value = setOne.a.value
-                });
-            }
-
-            return returnedSet;
+            return FuzzySolver.Summary(this, sSet);
         }
 
         public FuzzySet Complement()
         {
-            FuzzySet freturn = this;
-
-            if(freturn.a.x != null)
-                freturn.a.x = 1 - freturn.a.x;
-
-            if (freturn.b.x != null)
-                freturn.b.x = 1 - freturn.b.x;
-
-            if (freturn.c.x != null)
-                freturn.c.x = 1 - freturn.c.x;
-
-            return freturn;
+            return FuzzySolver.Complement(this);
         }
     }
 }

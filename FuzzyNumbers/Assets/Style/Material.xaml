@@ -222,6 +222,46 @@
         <Setter Property="Foreground" Value="{StaticResource ThemeForeground}" />
     </Style>
 
+    <Style x:Key="MaterialCheckbox" TargetType="{x:Type CheckBox}">
+        <Setter Property="Foreground" Value="{StaticResource ThemeDarkForeground}" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type CheckBox}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            x:Name="checkboxIcon"
+                            Grid.Column="0"
+                            VerticalAlignment="Center"
+                            Foreground="{StaticResource ThemeForeground}"
+                            Style="{StaticResource MaterialIcon}"
+                            Text="&#xEAB8;" />
+                        <ContentPresenter
+                            Grid.Column="1"
+                            Margin="4,-1,0,0"
+                            VerticalAlignment="Center" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="checkboxIcon" Property="Text" Value="&#xEAB8;" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter TargetName="checkboxIcon" Property="Text" Value="&#xEAB6;" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="checkboxIcon" Property="Foreground" Value="{StaticResource ThemeDarkForeground}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="MaterialComboBox" TargetType="{x:Type ComboBox}">
         <Setter Property="Margin" Value="0" />
         <Setter Property="MinHeight" Value="25" />
@@ -230,6 +270,7 @@
         <Setter Property="FlowDirection" Value="LeftToRight" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{StaticResource ThemeForeground}" />
         <Setter Property="BorderThickness" Value="0,0,0,0" />
         <Setter Property="Padding" Value="0,0,0,0" />
         <Setter Property="OverridesDefaultStyle" Value="True" />

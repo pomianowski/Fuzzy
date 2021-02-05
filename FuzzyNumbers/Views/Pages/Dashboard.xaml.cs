@@ -54,33 +54,6 @@ namespace FuzzyNumbers.Views.Pages
             popupMain.Show();
         }
 
-        private FuzzyValue ParseFuzzyValue(string text)
-        {
-            text = text.Trim();
-
-            if(string.IsNullOrEmpty(text))
-                return new FuzzyValue { value = null, x = null };
-
-            text = Regex.Replace(text, "[^0-9,.-]", "");
-            string[] points = text.Split(',');
-
-#if DEBUG
-            foreach (string point in points)
-                System.Diagnostics.Debug.WriteLine("Single detected point for string (" + text + "), is: " + point);
-#endif
-
-            double point_x = 0;
-            double point_value = 0;
-
-            if (points.Length > 2 || !double.TryParse(points[0].Replace('.', ','), out point_x))
-                return new FuzzyValue { value = null, x = null };
-
-            if (points.Length > 1)
-                double.TryParse(points[1].Replace('.', ','), out point_value);
-
-            return new FuzzyValue { x = point_x, value = point_value };
-        }
-
         private void ParseCurrentSet()
         {
             int index = _fuzzySets.Count;
@@ -140,6 +113,32 @@ namespace FuzzyNumbers.Views.Pages
 #endif
         }
 
+        private FuzzyValue ParseFuzzyValue(string text)
+        {
+            text = text.Trim();
+
+            if (string.IsNullOrEmpty(text))
+                return new FuzzyValue { value = null, x = null };
+
+            text = Regex.Replace(text, "[^0-9,.-]", "");
+            string[] points = text.Split(',');
+
+#if DEBUG
+            foreach (string point in points)
+                System.Diagnostics.Debug.WriteLine("Single detected point for string (" + text + "), is: " + point);
+#endif
+
+            double point_x = 0;
+            double point_value = 0;
+
+            if (points.Length > 2 || !double.TryParse(points[0].Replace('.', ','), out point_x))
+                return new FuzzyValue { value = null, x = null };
+
+            if (points.Length > 1)
+                double.TryParse(points[1].Replace('.', ','), out point_value);
+
+            return new FuzzyValue { x = point_x, value = point_value };
+        }
         private bool VerifyForm(CalcType selectedType)
         {
             if (selectedType == CalcType.Singleton && string.IsNullOrEmpty(textInputOne.Text))
@@ -277,8 +276,9 @@ namespace FuzzyNumbers.Views.Pages
         private void Button_Calc(object sender, RoutedEventArgs e)
         {
             string tag = (sender as Button).Tag.ToString().ToLower().Trim();
+            bool isCalcMode = (bool)checkboxCalculator.IsChecked;
 
-            if(this._fuzzySets.Count < 1)
+            if (this._fuzzySets.Count < 1)
             {
                 this.ShowPopup("It won't work!", "To perform the operation, it is required to add at least one fuzzy set.");
                 return;
@@ -303,8 +303,8 @@ namespace FuzzyNumbers.Views.Pages
 
                     for (int i = 0; i < this._fuzzySets.Count; i++)
                     {
-                        if (this._fuzzySets[i].Type == CalcType.Singleton)
-                            continue;
+                        //if (this._fuzzySets[i].Type == CalcType.Singleton) //we can handle singleton now
+                        //    continue;
 
                         index++;
 

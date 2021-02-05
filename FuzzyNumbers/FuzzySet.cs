@@ -28,7 +28,9 @@ namespace FuzzyNumbers
         Singleton,
         Gamma,
         L,
-        T
+        T,
+        CSingleton,
+        CT
     }
 
     [Serializable]
@@ -41,7 +43,8 @@ namespace FuzzyNumbers
     [Serializable]
     public class FuzzySet
     {
-        private static int _extender = 6;
+        private int _extenderMax = 6;
+        private int _extenderMin = 6;
 
         public CalcType Type = CalcType.Unknown;
         public List<FuzzyValue> absolutePoints = new List<FuzzyValue> { };
@@ -49,6 +52,13 @@ namespace FuzzyNumbers
         public FuzzyValue a = new FuzzyValue { value = null, x = null };
         public FuzzyValue b = new FuzzyValue { value = null, x = null };
         public FuzzyValue c = new FuzzyValue { value = null, x = null };
+
+        public void SetExtender(int min = 6, int max = 6)
+        {
+            //Extender min / max are the current symbolic display boundary points that exist to facilitate visualization
+            this._extenderMin = min;
+            this._extenderMax = max;
+        }
 
         public ChartValues<ObservablePoint> GetPlot()
         {
@@ -64,12 +74,12 @@ namespace FuzzyNumbers
                     System.Diagnostics.Debug.WriteLine(this.absolutePoints[i].value);
 #endif
                     if(i == 0)
-                        points.Add(new ObservablePoint((double)this.absolutePoints[i].value - _extender, (double)this.absolutePoints[i].x));
+                        points.Add(new ObservablePoint((double)this.absolutePoints[i].value - this._extenderMin, (double)this.absolutePoints[i].x));
                     
                     points.Add(new ObservablePoint((double)this.absolutePoints[i].value, (double)this.absolutePoints[i].x));
 
                     if (i == this.absolutePoints.Count - 1)
-                        points.Add(new ObservablePoint((double)this.absolutePoints[i].value + _extender, (double)this.absolutePoints[i].x));
+                        points.Add(new ObservablePoint((double)this.absolutePoints[i].value + this._extenderMax, (double)this.absolutePoints[i].x));
                 }
                 return points;
             }
@@ -82,17 +92,19 @@ namespace FuzzyNumbers
                     break;
                 case CalcType.Gamma:
                 case CalcType.L:
-                    points.Add(new ObservablePoint((double)a.value - _extender, (double)a.x));
+                    if (this.Type == CalcType.L) //symbolic line for L
+                        points.Add(new ObservablePoint((double)a.value - this._extenderMin, (double)a.x));
                     points.Add(new ObservablePoint((double)a.value, (double)a.x));
                     points.Add(new ObservablePoint((double)b.value, (double)b.x));
-                    points.Add(new ObservablePoint((double)b.value + _extender, (double)b.x));
+                    if(this.Type == CalcType.Gamma) //symbolic line for Gamma
+                        points.Add(new ObservablePoint((double)b.value + this._extenderMax, (double)b.x));
                     break;
                 case CalcType.T:
-                    points.Add(new ObservablePoint((double)a.value - _extender, (double)a.x));
+                    points.Add(new ObservablePoint((double)a.value - this._extenderMin, (double)a.x));
                     points.Add(new ObservablePoint((double)a.value, (double)a.x));
                     points.Add(new ObservablePoint((double)b.value, (double)b.x));
                     points.Add(new ObservablePoint((double)c.value, (double)c.x));
-                    points.Add(new ObservablePoint((double)c.value + _extender, (double)c.x));
+                    points.Add(new ObservablePoint((double)c.value + this._extenderMax, (double)c.x));
                     break;
                 default:
                     break;

@@ -106,6 +106,12 @@
                         Grid.Row="1"
                         Margin="0,8,0,0"
                         HorizontalAlignment="Stretch">
+                        <CheckBox
+                            x:Name="checkboxCalculator"
+                            Margin="10"
+                            HorizontalAlignment="Center"
+                            Content="Calculator mode (remove summed)"
+                            Style="{StaticResource MaterialCheckbox}" />
                         <Button
                             Background="Transparent"
                             Click="Button_Calc"

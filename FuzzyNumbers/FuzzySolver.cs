@@ -15,6 +15,11 @@ namespace FuzzyNumbers
 
         public static FuzzySet Summary(FuzzySet setOne, FuzzySet setTwo)
         {
+
+
+
+
+
             //s-norma
             if (setOne.Type == CalcType.Gamma && setTwo.Type == CalcType.L)
                 return SumLGamma(setTwo, setOne);
@@ -84,6 +89,49 @@ namespace FuzzyNumbers
         public static FuzzySet Complement(FuzzySet setOne)
         {
             FuzzySet freturn = setOne;
+
+            if(setOne.Type == CalcType.Singleton)
+            {
+                freturn.Type = CalcType.CSingleton;
+                freturn.absolutePoints = new List<FuzzyValue> { };
+                freturn.absolutePoints.Add(new FuzzyValue
+                {
+                    x = 1,
+                    value = freturn.a.x - 1 //is it true?
+                });
+                freturn.absolutePoints.Add(new FuzzyValue
+                {
+                    x = 0,
+                    value = freturn.a.x
+                });
+                freturn.absolutePoints.Add(new FuzzyValue
+                {
+                    x = 1,
+                    value = freturn.a.x + 1 //is it true?
+                });
+            }
+            else if (setOne.Type == CalcType.CSingleton) //complement singleton is changed to singleton
+            {
+                freturn.Type = CalcType.Singleton;
+                freturn.absolutePoints = new List<FuzzyValue> { }; //just clear absolute values for current singleton
+            }
+            else if(setOne.Type == CalcType.T)
+            {
+                freturn.Type = CalcType.CT; //T is changed to Complement T
+            }
+            else if (setOne.Type == CalcType.CT)
+            {
+                freturn.Type = CalcType.T; //Complement T is changed to T
+            }
+            else if (setOne.Type == CalcType.Gamma)
+            {
+                freturn.Type = CalcType.L; //Gamma is changed to L
+            }
+            else if (setOne.Type == CalcType.Gamma)
+            {
+                freturn.Type = CalcType.L; //L is changed to Gamma
+            }
+
 
             if (freturn.a.x != null)
                 freturn.a.x = 1 - freturn.a.x;

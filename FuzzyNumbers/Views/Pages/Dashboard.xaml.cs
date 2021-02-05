@@ -11,6 +11,16 @@ using Microsoft.Win32;
 
 namespace FuzzyNumbers.Views.Pages
 {
+    public struct FuzzySymbolic
+    {
+        public string Name { get; set; }
+        public int Type { get; set; }
+        public FuzzyValue a { get; set; }
+        public FuzzyValue b { get; set; }
+        public FuzzyValue c { get; set; }
+
+        public List<FuzzyValue> absolutePoints { get; set; }
+    }
     /// <summary>
     /// Interaction logic for Dashboard.xaml
     /// </summary>
@@ -297,19 +307,25 @@ namespace FuzzyNumbers.Views.Pages
                 case "complement":
                     this.ShowPopup("Calculating", "Computing complements of fuzzy sets.");
 
-                    int index = 0;
                     FuzzySet complement;
                     List<FuzzySet> tempSets = new List<FuzzySet> { };
 
                     for (int i = 0; i < this._fuzzySets.Count; i++)
                     {
-                        //if (this._fuzzySets[i].Type == CalcType.Singleton) //we can handle singleton now
-                        //    continue;
-
-                        index++;
+#if DEBUG
+                        System.Diagnostics.Debug.WriteLine("Complemented FuzzySet #" + i + ", Type: " + this._fuzzySets[i].Type.ToString());
+#endif
 
                         complement = this._fuzzySets[i].Complement();
-                        this.DrawSet("Complement #" + (index + this._fuzzySets.Count), complement.GetPlot());
+                        this.DrawSet("Complement #" + i, complement.GetPlot());
+
+                        if (isCalcMode)
+                        {
+                            //Delete the currently complemented fuzzy set in favor of the newly created one
+                            this._fuzzySets.RemoveAt(i);
+                            this.SeriesCollection.RemoveAt(i);
+                        }
+
                         tempSets.Add(complement);
                     }
 
@@ -374,8 +390,8 @@ namespace FuzzyNumbers.Views.Pages
                         System.Diagnostics.Debug.WriteLine(single.c.x);
                         System.Diagnostics.Debug.WriteLine(single.c.value);
 #endif
-                        this.DrawSet("[I] " + single.Type.ToString() + " #" + (this._fuzzySets.Count + 1), single.GetPlot());
                         this._fuzzySets.Add(single);
+                        this.DrawSet("[I] " + single.Type.ToString() + " #" + (this._fuzzySets.Count + 1), single.GetPlot());
                     }
                 }
                 catch
@@ -419,6 +435,26 @@ namespace FuzzyNumbers.Views.Pages
         private void Button_AddNew(object sender, RoutedEventArgs e)
         {
             this.ParseCurrentSet();
+        }
+
+        private void Button_View(object sender, RoutedEventArgs e)
+        {
+            if (gridResults.Visibility == Visibility.Visible)
+                gridResults.Visibility = Visibility.Hidden;
+            else
+            {
+                List<FuzzySymbolic> symList = new List<FuzzySymbolic> { };
+
+                for (int i = 0; i < this._fuzzySets.Count; i++)
+                    symList.Add(new FuzzySymbolic
+                    {
+                        Name = "#" + ( i + 1 ) + " " + this._fuzzySets[i].Type.ToString(),
+                        Type = (int)this._fuzzySets[i].Type
+                    });
+
+                icontrolSymbolic.ItemsSource = symList;
+                gridResults.Visibility = Visibility.Visible;
+            }
         }
 
         private void ComboClass_SelectionChanged(object sender, SelectionChangedEventArgs e)

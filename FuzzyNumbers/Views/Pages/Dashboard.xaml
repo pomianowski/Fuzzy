@@ -87,20 +87,42 @@
                             KeyUp="TextBoxInputFuzzy_KeyUp"
                             Tag="(x, c)"
                             Template="{StaticResource MaterialTextBoxPlaceholder}" />
-                        <Button
-                            Margin="0,8,0,0"
-                            Background="Transparent"
-                            Click="Button_AddNew"
-                            Style="{StaticResource MaterialButton}"
-                            Tag="add">
-                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                <TextBlock
-                                    Margin="0"
-                                    Style="{StaticResource MaterialIcon}"
-                                    Text="&#xEA0C;" />
-                                <TextBlock Margin="6,0,0,0" Text="Add fuzzy set to axis" />
-                            </StackPanel>
-                        </Button>
+                        <Grid Margin="0,8,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Button
+                                Grid.Column="0"
+                                Margin="0,0,4,0"
+                                Background="Transparent"
+                                Click="Button_AddNew"
+                                Style="{StaticResource MaterialButton}"
+                                Tag="add">
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                    <TextBlock
+                                        Margin="0"
+                                        Style="{StaticResource MaterialIcon}"
+                                        Text="&#xEA0C;" />
+                                    <TextBlock Margin="6,0,0,0" Text="Add fuzzy set" />
+                                </StackPanel>
+                            </Button>
+                            <Button
+                                Grid.Column="1"
+                                Margin="4,0,0,0"
+                                Background="Transparent"
+                                Click="Button_View"
+                                Style="{StaticResource MaterialButton}"
+                                Tag="add">
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                                    <TextBlock
+                                        Margin="0"
+                                        Style="{StaticResource MaterialIcon}"
+                                        Text="&#xEA70;" />
+                                    <TextBlock Margin="6,0,0,0" Text="Axis / Results View" />
+                                </StackPanel>
+                            </Button>
+                        </Grid>
                     </StackPanel>
                     <StackPanel
                         Grid.Row="1"
@@ -228,6 +250,61 @@
                         </lvc:CartesianChart.AxisX>
                     </lvc:CartesianChart>
                 </Grid>
+                <Border
+                    x:Name="gridResults"
+                    Grid.Column="1"
+                    Background="{StaticResource ThemeColor}"
+                    Visibility="Hidden">
+                    <ItemsControl Name="icontrolSymbolic" Margin="8,6,8,0">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="local:FuzzySymbolic">
+                                <Border
+                                    Padding="0,12,0,12"
+                                    BorderBrush="{StaticResource ThemeBorder}"
+                                    BorderThickness="0,0,0,1">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{Binding Name, Mode=OneTime}" />
+                                        <Viewbox
+                                            Grid.Column="1"
+                                            Width="170"
+                                            Height="60">
+                                            <ContentControl>
+                                                <ContentControl.Style>
+                                                    <Style TargetType="{x:Type ContentControl}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Type, Mode=OneTime}" Value="1">
+                                                                <Setter Property="Content" Value="{StaticResource vSingleton}" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Type, Mode=OneTime}" Value="2">
+                                                                <Setter Property="Content" Value="{StaticResource vGamma}" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Type, Mode=OneTime}" Value="3">
+                                                                <Setter Property="Content" Value="{StaticResource vL}" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Type, Mode=OneTime}" Value="4">
+                                                                <Setter Property="Content" Value="{StaticResource vT}" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Type, Mode=OneTime}" Value="5">
+                                                                <Setter Property="Content" Value="{StaticResource vSingleton}" />
+                                                            </DataTrigger>
+                                                            <DataTrigger Binding="{Binding Type, Mode=OneTime}" Value="6">
+                                                                <Setter Property="Content" Value="{StaticResource vT}" />
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ContentControl.Style>
+                                            </ContentControl>
+                                        </Viewbox>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Border>
                 <controls:Popup
                     x:Name="popupMain"
                     Grid.Column="1"

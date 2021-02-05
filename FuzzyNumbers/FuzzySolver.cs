@@ -10,6 +10,7 @@ namespace FuzzyNumbers
     {
         public static FuzzySet Product(FuzzySet setOne, FuzzySet setTwo)
         {
+            //?
             return setOne;
         }
 
@@ -92,6 +93,8 @@ namespace FuzzyNumbers
 
             if(setOne.Type == CalcType.Singleton)
             {
+                //Invert the values excluding the singleton point (inverted class T - CT)
+                //I don't know if this is correct, probably without +1 and -1 would be correct
                 freturn.Type = CalcType.CSingleton;
                 freturn.absolutePoints = new List<FuzzyValue> { };
                 freturn.absolutePoints.Add(new FuzzyValue
@@ -127,9 +130,9 @@ namespace FuzzyNumbers
             {
                 freturn.Type = CalcType.L; //Gamma is changed to L
             }
-            else if (setOne.Type == CalcType.Gamma)
+            else if (setOne.Type == CalcType.L)
             {
-                freturn.Type = CalcType.L; //L is changed to Gamma
+                freturn.Type = CalcType.Gamma; //L is changed to Gamma
             }
 
 

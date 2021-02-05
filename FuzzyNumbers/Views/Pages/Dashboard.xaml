@@ -175,6 +175,19 @@
                                 <TextBlock Margin="8,0,0,0" Text="Summary of all sets" />
                             </StackPanel>
                         </Button>
+                        <Button
+                            Margin="0,4,0,0"
+                            Background="Transparent"
+                            Click="Button_Membership"
+                            Style="{StaticResource MaterialButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="0"
+                                    Style="{StaticResource MaterialIcon}"
+                                    Text="&#xEA7A;" />
+                                <TextBlock Margin="8,0,0,0" Text="Verify membership" />
+                            </StackPanel>
+                        </Button>
                         <Grid Margin="0,4,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -226,6 +239,51 @@
                         </Grid>
                     </StackPanel>
                 </Grid>
+                <Border
+                    x:Name="gridMembership"
+                    Grid.Column="0"
+                    Background="{StaticResource ThemeColor}"
+                    Visibility="Hidden">
+                    <StackPanel>
+                        <ComboBox
+                            x:Name="comboFuzzySet"
+                            Margin="0,2,0,0"
+                            Style="{StaticResource MaterialComboBox}" />
+                        <TextBox
+                            x:Name="textMember"
+                            Margin="0,8,0,0"
+                            KeyUp="TextBoxInputFuzzy_KeyUp"
+                            Tag="μA(x) = ?"
+                            Template="{StaticResource MaterialTextBoxPlaceholder}" />
+                        <Button
+                            Margin="0,8,0,0"
+                            Background="Transparent"
+                            Click="Button_Membership_Verify"
+                            Style="{StaticResource MaterialButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="0"
+                                    Style="{StaticResource MaterialIcon}"
+                                    Text="&#xEEE9;" />
+                                <TextBlock Margin="8,0,0,0" Text="Verify" />
+                            </StackPanel>
+                        </Button>
+                        <Button
+                            Margin="0,8,0,0"
+                            Background="Transparent"
+                            Click="Button_Membership_Back"
+                            Style="{StaticResource MaterialButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="0"
+                                    Style="{StaticResource MaterialIcon}"
+                                    Text="&#xEA28;" />
+                                <TextBlock Margin="8,0,0,0" Text="Back" />
+                            </StackPanel>
+                        </Button>
+                        <TextBlock x:Name="textMembershipResult" Margin="0,12,0,0" />
+                    </StackPanel>
+                </Border>
                 <Grid Grid.Column="1">
                     <lvc:CartesianChart
                         x:Name="cartesianChart"

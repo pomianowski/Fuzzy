@@ -416,7 +416,7 @@ namespace FuzzyNumbers.Views.Pages
                         System.Diagnostics.Debug.WriteLine(single.c.value);
 #endif
                         this._fuzzySets.Add(single);
-                        this.DrawSet("[I] " + single.Type.ToString() + " #" + (this._fuzzySets.Count + 1), single.GetPlot());
+                        this.DrawSet("[I] #" + (this._fuzzySets.Count + 0) + " " + single.Type.ToString(), single.GetPlot()); //0 for now
                     }
                 }
                 catch
@@ -530,6 +530,96 @@ namespace FuzzyNumbers.Views.Pages
         private void Button_AddNew(object sender, RoutedEventArgs e)
         {
             this.ParseCurrentSet();
+        }
+
+        private void Button_Membership(object sender, RoutedEventArgs e)
+        {
+            if (this._fuzzySets.Count < 1)
+            {
+                this.ShowPopup("It won't work!", "Add at least one fuzzy set to test membership.", 5000);
+                return;
+            }
+
+            if (gridResults.Visibility == Visibility.Visible) //hide raw results if opened
+                gridResults.Visibility = Visibility.Hidden;
+
+            textMembershipResult.Text = "";
+            gridMembership.Visibility = Visibility.Visible;
+
+            List<string> fSets = new List<string> { };
+            for (int i = 0; i < this._fuzzySets.Count; i++)
+                fSets.Add("#" + ( i + 1 ) + " " + this._fuzzySets[i].Type.ToString());
+
+            comboFuzzySet.ItemsSource = fSets;
+            comboFuzzySet.SelectedIndex = 0;
+        }
+
+        private void Button_Membership_Back(object sender, RoutedEventArgs e)
+        {
+            gridMembership.Visibility = Visibility.Hidden;
+        }
+
+        private void Button_Membership_Verify(object sender, RoutedEventArgs e)
+        {
+            double result = 0;
+            double mvalue = 0;
+            string input = Regex.Replace(textMember.Text, "[^0-9,.-]", "");
+            if (!double.TryParse(input.Replace('.', ','), out mvalue))
+            {
+                this.ShowPopup("It won't work!", "Invalid number entered", 5000);
+                textMembershipResult.Text = "Inavlid number entered!";
+                return;
+            }
+
+            FuzzySet selectedSet = this._fuzzySets[comboFuzzySet.SelectedIndex];
+
+#if DEBUG
+            System.Diagnostics.Debug.WriteLine("Membership mvalue:"); 
+            System.Diagnostics.Debug.WriteLine(mvalue);
+#endif
+
+            switch (selectedSet.Type)
+            {
+                case CalcType.Singleton:
+                    if (mvalue == selectedSet.a.x)
+                        result = 1;
+                    break;
+                case CalcType.CSingleton:
+                    if (mvalue != selectedSet.a.x)
+                        //System.Diagnostics.Debug.WriteLine(selectedSet.a.x);
+                        result = 1;
+                    break;
+                case CalcType.Gamma:
+                    if (mvalue >= selectedSet.b.value)
+                        result = 1;
+                    else if(mvalue <= selectedSet.a.value)
+                        result = 0;
+                    else
+                        result = mvalue - (double)selectedSet.a.value / (double)(selectedSet.b.value - selectedSet.a.value);
+                    break;
+                case CalcType.L:
+                    if (mvalue <= selectedSet.a.value)
+                        result = 1;
+                    else if (mvalue >= selectedSet.b.value)
+                        result = 0;
+                    else
+                        result = (double)selectedSet.b.value - mvalue / (double)(selectedSet.b.value - selectedSet.a.value);
+                    break;
+                case CalcType.T:
+                    if (mvalue >= selectedSet.c.value)
+                        result = 1;
+                    else if (mvalue <= selectedSet.a.value)
+                        result = 0;
+                    else if (mvalue <= selectedSet.b.value)
+                        result = mvalue - (double)selectedSet.a.value / (double)(selectedSet.b.value - selectedSet.a.value);
+                    else
+                        result = (double)selectedSet.c.value - mvalue / (double)(selectedSet.c.value - selectedSet.b.value);
+                    break;
+            }
+
+            //result 1 or 0 or 0 < μA < 1
+            textMembershipResult.Text = "Result:\nμA(" + mvalue + ") = " + result;
+
         }
 
         private void Button_View(object sender, RoutedEventArgs e)

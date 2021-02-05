@@ -321,7 +321,7 @@ namespace FuzzyNumbers.Views.Pages
 #endif
 
                         complement = this._fuzzySets[i].Complement();
-                        this.DrawSet("Complement #" + i, complement.GetPlot());
+                        this.DrawSet("Complement #" + ( i + 1 ), complement.GetPlot());
 
                         if (isCalcMode)
                         {

@@ -338,16 +338,37 @@ namespace FuzzyNumbers.Views.Pages
 
                     break;
                     case "sum":
+
+                        if(this._fuzzySets.Count < 2)
+                        {
+                            this.ShowPopup("It won't work!", "To perform the summation operation, more than one fuzzy set must be specified.", 5000);
+                            return;
+                        }
                         FuzzySet summary = this._fuzzySets[0];
+
+                        if (isCalcMode)
+                        {
+                            //Delete the currently complemented fuzzy set in favor of the newly created one
+                            this._fuzzySets.RemoveAt(0);
+                            this.SeriesCollection.RemoveAt(0);
+                        }
 
                         for (int i = 1; i < this._fuzzySets.Count; i++)
                         {
                             summary = summary.Sum(this._fuzzySets[i]);
+                            if (isCalcMode)
+                            {
+                                //Delete the currently complemented fuzzy set in favor of the newly created one
+                                this._fuzzySets.RemoveAt(i);
+                                this.SeriesCollection.RemoveAt(i);
+                            }
                         }
 
                         this.ShowPopup("Processing...", "The sum of the fuzzy sets is being calculated.", 1000);
 
-                        this.DrawSet("Summary #" + (this._fuzzySets.Count + 1), summary.GetPlot());
+                        
+
+                        this.DrawSet("Summary #" + (this._fuzzySets.Count + 2), summary.GetPlot());
                         this._fuzzySets.Add(summary);
                     break;
                         default:

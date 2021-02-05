@@ -100,7 +100,8 @@ namespace FuzzyNumbers
                 freturn.absolutePoints.Add(new FuzzyValue
                 {
                     x = 1,
-                    value = freturn.a.x - 1 //is it true?
+                    //value = freturn.a.x - 1 //is it true?
+                    value = freturn.a.x
                 });
                 freturn.absolutePoints.Add(new FuzzyValue
                 {
@@ -110,7 +111,8 @@ namespace FuzzyNumbers
                 freturn.absolutePoints.Add(new FuzzyValue
                 {
                     x = 1,
-                    value = freturn.a.x + 1 //is it true?
+                    //value = freturn.a.x + 1 //is it true?
+                    value = freturn.a.x
                 });
             }
             else if (setOne.Type == CalcType.CSingleton) //complement singleton is changed to singleton

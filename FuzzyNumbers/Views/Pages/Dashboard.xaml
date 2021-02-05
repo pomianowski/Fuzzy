@@ -255,55 +255,151 @@
                     Grid.Column="1"
                     Background="{StaticResource ThemeColor}"
                     Visibility="Hidden">
-                    <ItemsControl Name="icontrolSymbolic" Margin="8,6,8,0">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="local:FuzzySymbolic">
-                                <Border
-                                    Padding="0,12,0,12"
-                                    BorderBrush="{StaticResource ThemeBorder}"
-                                    BorderThickness="0,0,0,1">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Text="{Binding Name, Mode=OneTime}" />
-                                        <Viewbox
-                                            Grid.Column="1"
-                                            Width="170"
-                                            Height="60">
-                                            <ContentControl>
-                                                <ContentControl.Style>
-                                                    <Style TargetType="{x:Type ContentControl}">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding Type, Mode=OneTime}" Value="1">
-                                                                <Setter Property="Content" Value="{StaticResource vSingleton}" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding Type, Mode=OneTime}" Value="2">
-                                                                <Setter Property="Content" Value="{StaticResource vGamma}" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding Type, Mode=OneTime}" Value="3">
-                                                                <Setter Property="Content" Value="{StaticResource vL}" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding Type, Mode=OneTime}" Value="4">
-                                                                <Setter Property="Content" Value="{StaticResource vT}" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding Type, Mode=OneTime}" Value="5">
-                                                                <Setter Property="Content" Value="{StaticResource vSingleton}" />
-                                                            </DataTrigger>
-                                                            <DataTrigger Binding="{Binding Type, Mode=OneTime}" Value="6">
-                                                                <Setter Property="Content" Value="{StaticResource vT}" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </ContentControl.Style>
-                                            </ContentControl>
-                                        </Viewbox>
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ItemsControl
+                            Name="icontrolSymbolic"
+                            Margin="8,6,8,0"
+                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                            ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="local:FuzzySymbolic">
+                                    <Border
+                                        Padding="0,12,0,12"
+                                        BorderBrush="{StaticResource ThemeBorder}"
+                                        BorderThickness="0,0,0,1">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Grid Grid.Column="0">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock
+                                                    Grid.Row="0"
+                                                    Grid.Column="0"
+                                                    Grid.ColumnSpan="3"
+                                                    FontWeight="Bold"
+                                                    Foreground="{StaticResource ThemeDarkForeground}"
+                                                    Text="{Binding Name, Mode=OneTime}" />
+                                                <TextBlock Grid.Row="1" Text="{Binding a, StringFormat={}a: {0}, Mode=OneTime}" />
+                                                <TextBlock Grid.Row="2" Text="{Binding ax, StringFormat={}(x;a): {0}, Mode=OneTime}" />
+                                                <TextBlock Grid.Row="1" Grid.Column="1">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="Text" Value="{Binding b, StringFormat={}b: {0}, Mode=OneTime}" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding b, Mode=OneTime}" Value="{x:Null}">
+                                                                    <Setter Property="Text" Value="c: not set" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                                <TextBlock Grid.Row="2" Grid.Column="1">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="Text" Value="{Binding bx, StringFormat={}(x;b): {0}, Mode=OneTime}" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding bx, Mode=OneTime}" Value="{x:Null}">
+                                                                    <Setter Property="Text" Value="(x;b): not set" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                                <TextBlock Grid.Row="1" Grid.Column="2">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="Text" Value="{Binding c, StringFormat={}c: {0}, Mode=OneTime}" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding c, Mode=OneTime}" Value="{x:Null}">
+                                                                    <Setter Property="Text" Value="c: not set" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                                <TextBlock Grid.Row="2" Grid.Column="2">
+                                                    <TextBlock.Style>
+                                                        <Style TargetType="{x:Type TextBlock}">
+                                                            <Setter Property="Text" Value="{Binding cx, StringFormat={}(x;c): {0}, Mode=OneTime}" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding cx, Mode=OneTime}" Value="{x:Null}">
+                                                                    <Setter Property="Text" Value="(x;c): not set" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </TextBlock.Style>
+                                                </TextBlock>
+                                            </Grid>
+
+                                            <Viewbox
+                                                Grid.Column="1"
+                                                Width="170"
+                                                Height="60">
+                                                <ContentControl>
+                                                    <ContentControl.Style>
+                                                        <Style TargetType="{x:Type ContentControl}">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Type, Mode=OneTime}" Value="1">
+                                                                    <Setter Property="Content" Value="{StaticResource vSingleton}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Type, Mode=OneTime}" Value="2">
+                                                                    <Setter Property="Content" Value="{StaticResource vGamma}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Type, Mode=OneTime}" Value="3">
+                                                                    <Setter Property="Content" Value="{StaticResource vL}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Type, Mode=OneTime}" Value="4">
+                                                                    <Setter Property="Content" Value="{StaticResource vT}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Type, Mode=OneTime}" Value="5">
+                                                                    <Setter Property="Content" Value="{StaticResource vSingleton}" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Type, Mode=OneTime}" Value="6">
+                                                                    <Setter Property="Content" Value="{StaticResource vT}" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ContentControl.Style>
+                                                </ContentControl>
+                                            </Viewbox>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Button
+                            Grid.Row="1"
+                            Margin="0,8,0,0"
+                            HorizontalAlignment="Right"
+                            Background="Transparent"
+                            Click="Button_Results"
+                            Style="{StaticResource MaterialButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="0"
+                                    Style="{StaticResource MaterialIcon}"
+                                    Text="&#xEEE9;" />
+                                <TextBlock Margin="8,0,0,0" Text="Export results as .txt" />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
                 </Border>
                 <controls:Popup
                     x:Name="popupMain"

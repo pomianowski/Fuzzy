@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,9 +16,12 @@ namespace FuzzyNumbers.Views.Pages
     {
         public string Name { get; set; }
         public int Type { get; set; }
-        public FuzzyValue a { get; set; }
-        public FuzzyValue b { get; set; }
-        public FuzzyValue c { get; set; }
+        public double? a { get; set; }
+        public double? ax { get; set; }
+        public double? b { get; set; }
+        public double? bx { get; set; }
+        public double? c { get; set; }
+        public double? cx { get; set; }
 
         public List<FuzzyValue> absolutePoints { get; set; }
     }
@@ -432,6 +436,76 @@ namespace FuzzyNumbers.Views.Pages
             }
         }
 
+        private void Button_Results(object sender, RoutedEventArgs e)
+        {
+            if (this._fuzzySets.Count < 1)
+            {
+                this.ShowPopup("It won't work!", "You must add at least one fuzzy set to perform the export operation", 5000);
+                return;
+            }
+            else
+            {
+                SaveFileDialog fileDialog = new SaveFileDialog()
+                {
+                    Title = "Fuzzy Sets",
+                    RestoreDirectory = true,
+                    InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
+                    Filter = "Fuzzy set results |*.txt|All files (*.*)|*.*"
+                };
+
+                if (fileDialog.ShowDialog() == true)
+                {
+                    try
+                    {
+                        StringBuilder r = new StringBuilder();
+                        r.AppendLine("-----------------------");
+                        r.AppendLine("Fuzzy Sets Results File");
+                        r.AppendLine("v." + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString());
+                        r.AppendLine("-----------------------");
+                        r.AppendLine("");
+
+                        for (int i = 0; i < this._fuzzySets.Count; i++)
+                        {
+                            r.AppendLine("");
+                            r.AppendLine("Fuzzy Number #" + ( i + 1 ));
+                            r.AppendLine("---------------");
+                            r.AppendLine("Class: " + this._fuzzySets[i].Type.ToString());
+                            r.Append("a = ");
+                            r.AppendLine(this._fuzzySets[i].a.value != null ? this._fuzzySets[i].a.value.ToString() : "not set");
+                            r.Append("(x;a) = ");
+                            r.AppendLine(this._fuzzySets[i].a.x != null ? this._fuzzySets[i].a.x.ToString() : "not set");
+                            r.Append("b = ");
+                            r.AppendLine(this._fuzzySets[i].b.value != null ? this._fuzzySets[i].b.value.ToString() : "not set");
+                            r.Append("(x;b) = ");
+                            r.AppendLine(this._fuzzySets[i].b.x != null ? this._fuzzySets[i].b.x.ToString() : "not set");
+                            r.Append("c = ");
+                            r.AppendLine(this._fuzzySets[i].c.value != null ? this._fuzzySets[i].c.value.ToString() : "not set");
+                            r.Append("(x;c) = ");
+                            r.AppendLine(this._fuzzySets[i].c.x != null ? this._fuzzySets[i].c.x.ToString() : "not set");
+
+                            if(this._fuzzySets[i].absolutePoints.Count > 0)
+                            {
+                                r.AppendLine("\tPoints:");
+                                for (int j = 0; j < this._fuzzySets[i].absolutePoints.Count; j++)
+                                {
+                                    r.AppendLine("\tPoint (#" + ( j + 1 ) + ")");
+                                    r.AppendLine("\ta' = " + this._fuzzySets[i].absolutePoints[j].value);
+                                    r.AppendLine("\t(x;a') = " + this._fuzzySets[i].absolutePoints[j].x);
+                                }
+                            }
+                        }
+
+                        this.ShowPopup("Processing...", "All sets of fuzzy numbers are being exported to file:\n" + fileDialog.FileName, 5000);
+                        System.IO.File.WriteAllText(fileDialog.FileName, r.ToString());
+                    }
+                    catch
+                    {
+                        this.ShowPopup("It won't work!", "Failed to correctly write results to file.", 5000);
+                    }
+                }
+            }
+        }
+
         private void Button_AddNew(object sender, RoutedEventArgs e)
         {
             this.ParseCurrentSet();
@@ -449,7 +523,14 @@ namespace FuzzyNumbers.Views.Pages
                     symList.Add(new FuzzySymbolic
                     {
                         Name = "#" + ( i + 1 ) + " " + this._fuzzySets[i].Type.ToString(),
-                        Type = (int)this._fuzzySets[i].Type
+                        Type = (int)this._fuzzySets[i].Type,
+                        a = this._fuzzySets[i].a.value,
+                        ax = this._fuzzySets[i].a.x,
+                        b = this._fuzzySets[i].b.value,
+                        bx = this._fuzzySets[i].b.x,
+                        c = this._fuzzySets[i].c.value,
+                        cx = this._fuzzySets[i].c.x,
+                        absolutePoints = this._fuzzySets[i].absolutePoints
                     });
 
                 icontrolSymbolic.ItemsSource = symList;

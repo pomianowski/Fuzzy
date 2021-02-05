@@ -401,6 +401,9 @@ namespace FuzzyNumbers.Views.Pages
             {
                 try
                 {
+                    if (gridResults.Visibility == Visibility.Visible) //hide raw results if opened
+                        gridResults.Visibility = Visibility.Hidden;
+
                     List<FuzzySet> importedSets = Encoder.Read<List<FuzzySet>>(fileDialog.FileName);
                     this.ShowPopup("Processing...", "All sets of fuzzy numbers are being imported...", 1000);
 
